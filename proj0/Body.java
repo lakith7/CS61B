@@ -5,7 +5,7 @@ public class Body {
   public double yyVel;
   public double mass;
   public String imgFileName;
-  static final double G = 6.67e-11;
+  private static final double G = 6.67e-11;
 
   public Body(double xP, double yP, double xV, double yV,
               double m, String img) {
