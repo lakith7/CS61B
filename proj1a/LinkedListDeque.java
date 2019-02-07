@@ -106,7 +106,7 @@ public class LinkedListDeque<Hello> {
         return holder;
     }
 
-    @JoshHug
+    //The method below was written by Josh Hug. It is not my code.//
     public LinkedListDeque(LinkedListDeque other) {
         sentinel = new ThingNode(null, null, null);
         this.sentinel.next = this.sentinel;

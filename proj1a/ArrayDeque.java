@@ -103,7 +103,7 @@ public class ArrayDeque<Glorp> {
         return items[newFirst + index + 1];
     }
 
-    @JoshHug
+    //The method below was written by Josh Hug. It is not my code.//
     public ArrayDeque(ArrayDeque other) {
         items = (Glorp[]) new Object[other.items.length];
         size = 0;
