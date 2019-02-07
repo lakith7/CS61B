@@ -88,15 +88,17 @@ public class ArrayDeque<Glorp> {
     public Glorp removeFirst() {
         newFirst += 1;
         size -= 1;
+        Glorp temp = items[newFirst];
         this.resize_check();
-        return items[newFirst];
+        return temp;
     }
 
     public Glorp removeLast() {
         newLast -= 1;
         size -= 1;
+        Glorp temp = items[newLast];
         this.resize_check();
-        return items[newLast];
+        return temp;
     }
 
     public Glorp get(int index) {
@@ -125,7 +127,8 @@ public class ArrayDeque<Glorp> {
         test.addLast(5);
         test.addLast(6);
         test.addLast(7);
-        System.out.print(test.get(0));
+        System.out.println(test.removeFirst());
+        System.out.print(test.removeLast());
     }
 
 
