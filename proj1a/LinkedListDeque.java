@@ -69,7 +69,9 @@ public class LinkedListDeque<Hello> {
         Hello temporary = this.sentinel.next.item;
         this.sentinel.next.next.previous = this.sentinel;
         this.sentinel.next = this.sentinel.next.next;
-        size -= 1;
+        if (size != 0) {
+            size -= 1;
+        }
         return temporary;
     }
 
@@ -77,7 +79,9 @@ public class LinkedListDeque<Hello> {
         Hello temporary = this.sentinel.previous.item;
         this.sentinel.previous = this.sentinel.previous.previous;
         this.sentinel.previous.next = this.sentinel;
-        size -= 1;
+        if (size != 0) {
+            size -= 1;
+        }
         return temporary;
 
     }
@@ -126,5 +130,4 @@ public class LinkedListDeque<Hello> {
         temporary.removeFirst();
         return temporary.getRecursive(index - 1);
     }
-
 }

@@ -72,14 +72,14 @@ public class ArrayDeque<Glorp> {
         if ((items.length % 2) != 0) {
             Glorp[] replacement = (Glorp[]) new Object[(2 * items.length) + 1];
             System.arraycopy(items, 0, replacement, ((replacement.length - items.length) / 2), items.length);
-            newFirst = ((replacement.length - items.length) / 2) - 1;
+            newFirst = (replacement.length - items.length) - 1;
             newLast = replacement.length - newFirst - 1;
             items = replacement;
         }
         if ((items.length % 2) == 0) {
             Glorp[] replacement = (Glorp[]) new Object[2 * items.length];
             System.arraycopy(items, 0, replacement, ((replacement.length - items.length) / 2), items.length);
-            newFirst = ((replacement.length - items.length) / 2) - 1;
+            newFirst = (replacement.length - items.length) - 1;
             newLast = replacement.length - newFirst - 1;
             items = replacement;
         }
@@ -113,6 +113,18 @@ public class ArrayDeque<Glorp> {
         for (int i = 0; i < other.items.length; i+=1) {
             addLast((Glorp) other.get(i));
         }
+    }
+
+    public static void main(String[] args) {
+        ArrayDeque test = new ArrayDeque<Integer> ();
+        test.addLast(8);
+        test.addLast(8);
+        test.addLast(8);
+        test.addLast(8);
+        test.addLast(8);
+        test.addLast(8);
+        test.addLast(8);
+        System.out.print(test.get(0));
     }
 
 
