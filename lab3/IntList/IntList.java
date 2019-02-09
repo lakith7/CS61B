@@ -41,7 +41,7 @@ public class IntList {
         if (A.rest != null) {
             return null;
         }
-        IntList reversed = new IntList ();
+        return new IntList (3, null);
     }
 
     /**
