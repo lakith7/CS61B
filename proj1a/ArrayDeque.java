@@ -64,7 +64,12 @@ public class ArrayDeque<Glorp> {
         }
     }
     public void resize_less() {
-        if ((size % 2) == 0) {
+        if (size == 0) {
+            items = (Glorp[]) new Object[8];
+            newFirst = 3;
+            newLast = 4;
+        }
+        if ((size % 2 == 0) && (size != 0)) {
             Glorp[] replacement = (Glorp[]) new Object[(2 * size)];
             int tracker = 0;
             int start = (replacement.length - size)/2;
@@ -93,7 +98,6 @@ public class ArrayDeque<Glorp> {
             items = replacement;
         }
     }
-
     public void resize() {
         if ((items.length % 2) == 0) {
             Glorp[] replacement = (Glorp[]) new Object[(2 * items.length)];
@@ -168,6 +172,12 @@ public class ArrayDeque<Glorp> {
         for (int i = 0; i < other.items.length; i+=1) {
             items[i] = (Glorp) other.items[i];
         }
+    }
+    public static void main(String[] args) {
+        ArrayDeque<Integer> test = new ArrayDeque<>();
+        test.addFirst(0);
+        test.removeFirst();
+        test.addFirst(2);
     }
 
 }
