@@ -87,7 +87,6 @@ public class ArrayDeque<Glorp> {
         items = replacement;
     }
 
-    //Fix resize. Consider getting rid of all arguments and starting from scratch//
     public void resize() {
         if ((items.length % 2) == 0) {
             Glorp[] replacement = (Glorp[]) new Object[(2 * items.length)];
@@ -160,7 +159,7 @@ public class ArrayDeque<Glorp> {
 
     //The method below was written by Josh Hug. It is not my code.//
     public ArrayDeque(ArrayDeque other) {
-        items = (Glorp[]) new Object[8];
+        items = (Glorp[]) new Object[other.items.length];
         size = other.size;
         newFirst = other.newFirst;
         newLast = other.newLast;
@@ -169,5 +168,7 @@ public class ArrayDeque<Glorp> {
             items[i] = (Glorp) other.items[i];
         }
     }
+ 
+
 
 }
