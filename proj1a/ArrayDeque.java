@@ -161,14 +161,22 @@ public class ArrayDeque<Glorp> {
     //The method below was written by Josh Hug. It is not my code.//
     public ArrayDeque(ArrayDeque other) {
         items = (Glorp[]) new Object[8];
-        size = 0;
-        newFirst = 3;
-        newLast = 4;
+        size = other.size;
+        newFirst = other.newFirst;
+        newLast = other.newLast;
 
         for (int i = 0; i < other.items.length; i+=1) {
-            addLast((Glorp) other.get(i));
+            items[i] = (Glorp) other.items[i];
         }
     }
+    public static void main(String[] args) {
+        ArrayDeque test = new ArrayDeque<Integer> ();
+        test.addFirst(8);
+        test.addLast(9);
+        test.addFirst(7);
+        ArrayDeque<Integer> thisIsANewCopy = new ArrayDeque<>(test);
+    }
+
 
 
 }
