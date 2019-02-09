@@ -1,16 +1,16 @@
-public class ArrayDeque<Glorp> {
+public class ArrayDeque<T> {
     //Some of the code is derived from lecture. That code was created by Josh Hug//
-    public Glorp[] items;
-    public int size;
-    public int newFirst;
-    public int newLast;
+    private T[] items;
+    private int size;
+    private int newFirst;
+    private int newLast;
     public ArrayDeque() {
-        items = (Glorp[]) new Object[8];
+        items = (T[]) new Object[8];
         size = 0;
         newFirst = 3;
         newLast = 4;
     }
-    public void addFirst(Glorp a) {
+    public void addFirst(T a) {
         if ((newFirst == -1) && (newLast == items.length)) {
             this.resize();
         }
@@ -24,7 +24,7 @@ public class ArrayDeque<Glorp> {
         newFirst -= 1;
         size += 1;
     }
-    public void addLast(Glorp a) {
+    public void addLast(T a) {
         if ((newLast == items.length) && (newFirst == -1)) {
             this.resize();
         }
@@ -55,24 +55,24 @@ public class ArrayDeque<Glorp> {
             index += 1;
         }
     }
-    public void resize_check() {
-        if ((items.length >= 16) && (size/items.length < 0.25)) {
-            this.resize_less();
+    public void resizeCheck() {
+        if ((items.length >= 16) && (size / items.length < 0.25)) {
+            this.resizeLess();
         }
-        if (size/items.length < 0.2) {
-            this.resize_less();
+        if (size / items.length < 0.2) {
+            this.resizeLess();
         }
     }
-    public void resize_less() {
+    public void resizeLess() {
         if (size == 0) {
-            items = (Glorp[]) new Object[8];
+            items = (T[]) new Object[8];
             newFirst = 3;
             newLast = 4;
         }
         if ((size % 2 == 0) && (size != 0)) {
-            Glorp[] replacement = (Glorp[]) new Object[(2 * size)];
+            T[] replacement = (T[]) new Object[(2 * size)];
             int tracker = 0;
-            int start = (replacement.length - size)/2;
+            int start = (replacement.length - size) / 2;
             int starter = start;
             while (tracker < size) {
                 replacement[start] = this.get(tracker);
@@ -84,9 +84,9 @@ public class ArrayDeque<Glorp> {
             items = replacement;
         }
         if ((size % 2) != 0) {
-            Glorp[] replacement = (Glorp[]) new Object[2 * size + 1];
+            T[] replacement = (T[]) new Object[2 * size + 1];
             int tracker = 0;
-            int start = (replacement.length - size)/2;
+            int start = (replacement.length - size) / 2;
             int starter = start;
             while (tracker < size) {
                 replacement[start] = this.get(tracker);
@@ -100,33 +100,33 @@ public class ArrayDeque<Glorp> {
     }
     public void resize() {
         if ((items.length % 2) == 0) {
-            Glorp[] replacement = (Glorp[]) new Object[(2 * items.length)];
+            T[] replacement = (T[]) new Object[(2 * items.length)];
             int tracker = 0;
-            int start = (replacement.length - items.length)/2;
+            int start = (replacement.length - items.length) / 2;
             while (tracker < size) {
                 replacement[start] = this.get(tracker);
                 tracker += 1;
                 start += 1;
             }
-            newFirst = (replacement.length - items.length)/2 - 1;
+            newFirst = (replacement.length - items.length) / 2 - 1;
             newLast = newFirst + size + 1;
             items = replacement;
         }
         if ((items.length % 2) != 0) {
-            Glorp[] replacement = (Glorp[]) new Object[2 * items.length];
+            T[] replacement = (T[]) new Object[2 * items.length];
             int tracker = 0;
-            int start = (replacement.length - items.length - 1)/2 + 1;
+            int start = (replacement.length - items.length - 1) / 2 + 1;
             while (tracker < size) {
                 replacement[start] = this.get(tracker);
                 tracker += 1;
                 start += 1;
             }
-            newFirst = (replacement.length - items.length - 1)/2;
+            newFirst = (replacement.length - items.length - 1) / 2;
             newLast = newFirst + size + 1;
             items = replacement;
         }
     }
-    public Glorp removeFirst() {
+    public T removeFirst() {
         if (size == 0) {
             return null;
         }
@@ -135,11 +135,11 @@ public class ArrayDeque<Glorp> {
             newFirst = 0;
         }
         size -= 1;
-        Glorp temp = items[newFirst];
-        this.resize_check();
+        T temp = items[newFirst];
+        this.resizeCheck();
         return temp;
     }
-    public Glorp removeLast() {
+    public T removeLast() {
         if (size == 0) {
             return null;
         }
@@ -148,11 +148,11 @@ public class ArrayDeque<Glorp> {
             newLast = (items.length - 1);
         }
         size -= 1;
-        Glorp temp = items[newLast];
-        this.resize_check();
+        T temp = items[newLast];
+        this.resizeCheck();
         return temp;
     }
-    public Glorp get(int index) {
+    public T get(int index) {
         if ((newFirst > newLast) || (newFirst == newLast)) {
             if ((newFirst + index + 1) > (items.length - 1)) {
                 return items[index - (items.length - newFirst - 1)];
@@ -165,19 +165,14 @@ public class ArrayDeque<Glorp> {
     }
     //The method below was written by Josh Hug. It is not my code.//
     public ArrayDeque(ArrayDeque other) {
-        items = (Glorp[]) new Object[other.items.length];
+        items = (T[]) new Object[other.items.length];
         size = other.size;
         newFirst = other.newFirst;
         newLast = other.newLast;
-        for (int i = 0; i < other.items.length; i+=1) {
-            items[i] = (Glorp) other.items[i];
+        for (int i = 0; i < other.items.length; i += 1) {
+            items[i] = (T) other.items[i];
         }
     }
-    public static void main(String[] args) {
-        ArrayDeque<Integer> test = new ArrayDeque<>();
-        test.addFirst(0);
-        test.removeFirst();
-        test.addFirst(2);
-    }
+
 
 }

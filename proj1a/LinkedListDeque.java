@@ -1,12 +1,12 @@
-public class LinkedListDeque<Hello> {
+public class LinkedListDeque<T> {
 
     // This class was written by Josh Hug in lecture. I merely adapted it for my program. //
-    public class ThingNode {
-        public Hello item;
-        public ThingNode next;
-        public ThingNode previous;
+    private class ThingNode {
+        private T item;
+        private ThingNode next;
+        private ThingNode previous;
 
-        public ThingNode(Hello a, ThingNode b, ThingNode p) {
+        public ThingNode(T a, ThingNode b, ThingNode p) {
             item = a;
             next = b;
             previous = p;
@@ -15,8 +15,8 @@ public class LinkedListDeque<Hello> {
 
     }
 
-    public ThingNode sentinel;
-    public int size;
+    private ThingNode sentinel;
+    private int size;
 
     public LinkedListDeque() {
         sentinel = new ThingNode(null, null, null);
@@ -25,7 +25,7 @@ public class LinkedListDeque<Hello> {
         size = 0;
     }
 
-    public LinkedListDeque(Hello a) {
+    public LinkedListDeque(T a) {
         sentinel = new ThingNode(null, null, null);
         sentinel.next = new ThingNode(a, null, null);
         sentinel.previous = sentinel.next;
@@ -35,14 +35,14 @@ public class LinkedListDeque<Hello> {
 
     }
 
-    public void addFirst(Hello a) {
+    public void addFirst(T a) {
         this.sentinel.next = new ThingNode(a, this.sentinel.next, this.sentinel);
         this.sentinel.next.next.previous = this.sentinel.next;
         size += 1;
 
     }
 
-    public void addLast(Hello a) {
+    public void addLast(T a) {
         this.sentinel.previous = new ThingNode(a, this.sentinel, this.sentinel.previous);
         this.sentinel.previous.previous.next = this.sentinel.previous;
         size += 1;
@@ -55,7 +55,6 @@ public class LinkedListDeque<Hello> {
         return false;
     }
 
-    //Might not work because assigning temp to sentinel and then changing temp might change sentinel too//
     public void printDeque() {
         System.out.print(this.sentinel.next.item);
         ThingNode temp = this.sentinel.next;
@@ -65,8 +64,8 @@ public class LinkedListDeque<Hello> {
         }
     }
 
-    public Hello removeFirst() {
-        Hello temporary = this.sentinel.next.item;
+    public T removeFirst() {
+        T temporary = this.sentinel.next.item;
         this.sentinel.next.next.previous = this.sentinel;
         this.sentinel.next = this.sentinel.next.next;
         if (size != 0) {
@@ -75,8 +74,8 @@ public class LinkedListDeque<Hello> {
         return temporary;
     }
 
-    public Hello removeLast() {
-        Hello temporary = this.sentinel.previous.item;
+    public T removeLast() {
+        T temporary = this.sentinel.previous.item;
         this.sentinel.previous = this.sentinel.previous.previous;
         this.sentinel.previous.next = this.sentinel;
         if (size != 0) {
@@ -86,7 +85,7 @@ public class LinkedListDeque<Hello> {
 
     }
 
-    public Hello get(int index) {
+    public T get(int index) {
         ThingNode holder = this.sentinel.next;
         while (index != 0) {
             holder = holder.next;
@@ -99,17 +98,6 @@ public class LinkedListDeque<Hello> {
         return this.size;
     }
 
-
-    public LinkedListDeque copier(LinkedListDeque other) {
-        ThingNode copy = other.sentinel;
-        LinkedListDeque<Hello> holder = new LinkedListDeque<>();
-        while (copy.next != other.sentinel) {
-            holder.addLast(copy.next.item);
-            copy = copy.next;
-        }
-        return holder;
-    }
-
     //The method below was written by Josh Hug. It is not my code.//
     public LinkedListDeque(LinkedListDeque other) {
         sentinel = new ThingNode(null, null, null);
@@ -118,12 +106,12 @@ public class LinkedListDeque<Hello> {
         size = 0;
 
         for (int i = 0; i < other.size(); i += 1) {
-            addLast((Hello) other.get(i));
+            addLast((T) other.get(i));
         }
     }
 
-    public Hello getRecursive(int index) {
-        LinkedListDeque<Hello> temporary = copier(this);
+    public T getRecursive(int index) {
+        LinkedListDeque<T> temporary = new LinkedListDeque<>(this);
         if (index == 0) {
             return temporary.sentinel.next.item;
         }
