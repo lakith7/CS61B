@@ -169,14 +169,5 @@ public class ArrayDeque<Glorp> {
             items[i] = (Glorp) other.items[i];
         }
     }
-    public static void main(String[] args) {
-        ArrayDeque test = new ArrayDeque<Integer> ();
-        test.addFirst(8);
-        test.addLast(9);
-        test.addFirst(7);
-        ArrayDeque<Integer> thisIsANewCopy = new ArrayDeque<>(test);
-    }
-
-
 
 }
