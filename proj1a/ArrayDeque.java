@@ -158,19 +158,5 @@ public class ArrayDeque<Glorp> {
         }
     }
 
-    public static void main(String[] args) {
-        ArrayDeque test = new ArrayDeque<Integer> ();
-        test.addFirst(0);
-        test.addLast(1);
-        test.removeFirst()   ;
-        test.get(0)     ;
-        test.removeLast()     ;
-        test.addLast(5);
-        test.addFirst(6);
-        test.addFirst(7);
-        System.out.println(test.removeFirst())    ;
-        System.out.print(test.removeLast());
-    }
-
 
 }
