@@ -112,6 +112,9 @@ public class ArrayDeque<Glorp> {
     }
 
     public Glorp removeFirst() {
+        if (size == 0) {
+            return null;
+        }
         newFirst += 1;
         if (newFirst == items.length) {
             newFirst = 0;
@@ -123,6 +126,9 @@ public class ArrayDeque<Glorp> {
     }
 
     public Glorp removeLast() {
+        if (size == 0) {
+            return null;
+        }
         newLast -= 1;
         if (newLast == -1) {
             newLast = (items.length - 1);
@@ -156,6 +162,11 @@ public class ArrayDeque<Glorp> {
         for (int i = 0; i < other.items.length; i+=1) {
             addLast((Glorp) other.get(i));
         }
+    }
+
+    public static void main(String[] args) {
+        ArrayDeque test = new ArrayDeque<Integer> ();
+        test.removeLast();
     }
 
 
