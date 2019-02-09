@@ -74,34 +74,15 @@ public class ArrayDeque<Glorp> {
     }
 
     public void resize_less() {
-        if ((size % 2) == 0) {
-            Glorp[] replacement = (Glorp[]) new Object[(2 * size)];
-            int tracker = 0;
-            int start = (replacement.length - size)/2;
-            int starter = start;
-            while (tracker < size) {
-                replacement[start] = this.get(tracker);
-                tracker += 1;
-                start += 1;
-            }
-            newFirst = starter - 1;
-            newLast = newFirst + size + 1;
-            items = replacement;
+        Glorp[] replacement = (Glorp []) new Object[size];
+        int tracker = 0;
+        while (tracker < size) {
+            replacement[tracker] = this.get(tracker);
+            tracker += 1;
         }
-        if ((size % 2) != 0) {
-            Glorp[] replacement = (Glorp[]) new Object[2 * size + 1];
-            int tracker = 0;
-            int start = (replacement.length - size)/2;
-            int starter = start;
-            while (tracker < size) {
-                replacement[start] = this.get(tracker);
-                tracker += 1;
-                start += 1;
-            }
-            newFirst = starter - 1;
-            newLast = newFirst + size + 1;
-            items = replacement;
-        }
+        newFirst = -1;
+        newLast = replacement.length;
+        items = replacement;
     }
 
     public void resize() {
