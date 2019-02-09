@@ -13,6 +13,9 @@ public class ArrayDeque<Glorp> {
     }
 
     public void addFirst(Glorp a) {
+        if ((newFirst == -1) && (newLast == items.length)) {
+            this.resize();
+        }
         if (newFirst == -1) {
             newFirst = items.length - 1;
         }
@@ -25,6 +28,9 @@ public class ArrayDeque<Glorp> {
     }
 
     public void addLast(Glorp a) {
+        if ((newLast == items.length) && (newFirst == -1)) {
+            this.resize();
+        }
         if (newLast == items.length) {
             newLast = 0;
         }
@@ -154,7 +160,7 @@ public class ArrayDeque<Glorp> {
 
     //The method below was written by Josh Hug. It is not my code.//
     public ArrayDeque(ArrayDeque other) {
-        items = (Glorp[]) new Object[other.items.length];
+        items = (Glorp[]) new Object[8];
         size = 0;
         newFirst = 3;
         newLast = 4;
@@ -162,11 +168,6 @@ public class ArrayDeque<Glorp> {
         for (int i = 0; i < other.items.length; i+=1) {
             addLast((Glorp) other.get(i));
         }
-    }
-
-    public static void main(String[] args) {
-        ArrayDeque test = new ArrayDeque<Integer> ();
-        test.removeLast();
     }
 
 
