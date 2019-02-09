@@ -16,7 +16,7 @@ public class ArrayDeque<Glorp> {
         if (newFirst == -1) {
             newFirst = items.length - 1;
         }
-        if (newLast == newFirst) {
+        if (newLast == newFirst || items.length < 3) {
             this.resize();
         }
         items[newFirst] = a;
@@ -160,17 +160,16 @@ public class ArrayDeque<Glorp> {
 
     public static void main(String[] args) {
         ArrayDeque test = new ArrayDeque<Integer> ();
-        test.addLast(0);
+        test.addFirst(0);
         test.addLast(1);
-        test.addLast(2);
-        test.addLast(3);
-        test.addLast(4);
+        test.removeFirst()   ;
+        test.get(0)     ;
+        test.removeLast()     ;
         test.addLast(5);
-        test.addLast(6);
-        test.addLast(7);
-        test.addLast(8);
-        test.addLast(9);
-        test.printDeque();
+        test.addFirst(6);
+        test.addFirst(7);
+        System.out.println(test.removeFirst())    ;
+        System.out.print(test.removeLast());
     }
 
 
