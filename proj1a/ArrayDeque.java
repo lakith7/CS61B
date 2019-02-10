@@ -56,10 +56,10 @@ public class ArrayDeque<T> {
         }
     }
     private void resizeCheck() {
-        if ((items.length >= 16) && (size / items.length < 0.25)) {
+        if ((items.length >= 16) && (size * 4 < items.length)) {
             this.resizeLess();
         }
-        if (size / items.length < 0.2) {
+        if (size * 5 < items.length) {
             this.resizeLess();
         }
     }
