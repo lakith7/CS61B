@@ -24,16 +24,7 @@ public class LinkedListDeque<T> {
         this.sentinel.previous = this.sentinel;
         size = 0;
     }
-
-    public LinkedListDeque(T a) {
-        sentinel = new ThingNode(null, null, null);
-        sentinel.next = new ThingNode(a, null, null);
-        sentinel.previous = sentinel.next;
-        sentinel.next.previous = sentinel;
-        sentinel.next.next = sentinel;
-        size = 1;
-
-    }
+    
 
     public void addFirst(T a) {
         this.sentinel.next = new ThingNode(a, this.sentinel.next, this.sentinel);
