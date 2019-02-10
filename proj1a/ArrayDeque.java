@@ -55,7 +55,7 @@ public class ArrayDeque<T> {
             index += 1;
         }
     }
-    public void resizeCheck() {
+    private void resizeCheck() {
         if ((items.length >= 16) && (size / items.length < 0.25)) {
             this.resizeLess();
         }
@@ -63,7 +63,7 @@ public class ArrayDeque<T> {
             this.resizeLess();
         }
     }
-    public void resizeLess() {
+    private void resizeLess() {
         if (size == 0) {
             items = (T[]) new Object[8];
             newFirst = 3;
@@ -98,7 +98,7 @@ public class ArrayDeque<T> {
             items = replacement;
         }
     }
-    public void resize() {
+    private void resize() {
         if ((items.length % 2) == 0) {
             T[] replacement = (T[]) new Object[(2 * items.length)];
             int tracker = 0;
