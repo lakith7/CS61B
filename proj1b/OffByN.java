@@ -1,7 +1,7 @@
 public class OffByN implements CharacterComparator {
-    public int offset;
+    private int offset;
 
-    public OffByN(int N){
+    public OffByN(int N) {
         this.offset = N;
     }
 
@@ -10,7 +10,8 @@ public class OffByN implements CharacterComparator {
         if (holder == offset) {
             return true;
         }
-        if (holder == (-1*offset)) {
+
+        if (holder == (-1 * offset)) {
             return true;
         }
 

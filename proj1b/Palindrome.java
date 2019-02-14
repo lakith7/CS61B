@@ -1,4 +1,5 @@
 public class Palindrome {
+
     public Deque<Character> wordToDeque(String word) {
         Deque<Character> holder =  new LinkedListDeque<>();
         int index = 0;
@@ -38,13 +39,12 @@ public class Palindrome {
         Deque check = checker.wordToDeque(word);
 
         while (check.size() > 1) {
-            if (cc.equalChars((char) check.removeFirst(), (char) check.removeLast()) == false) {
+            if (!cc.equalChars((char) check.removeFirst(), (char) check.removeLast())) {
                 return false;
             }
         }
 
         return true;
-
 
     }
 
