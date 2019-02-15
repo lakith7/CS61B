@@ -8,23 +8,23 @@ A:
 
 Q: What's something you felt proud of in your code, if anything?
 
-A:
+A:I was proud about implementing a circular approach.
 
 Q: What's something that was particularly inelegant in your code, if anything?
 
-A:
+A: I found that my resize function was inelegant (it was very long and didn't pass the quickness tests).
 
 Q: What did you learn by talking to your partner about writing ArrayDeque?
 
-A:
+A: I learned that there is a way to make resize even more efficient.
 
 Q: What do you wish you would have known before writing ArrayDeque, if anything?
 
-A:
+A: I wish I understood a circular approach better because I implemented it a lot late and I had to rewrite a lot of code.
 
 Q: If you wrote ArrayDeque again, what would you do differently, if anything?
 
-A:
+A: I would write resize and resize_less better (maybe even combine them).
 
 -----
 
@@ -36,23 +36,23 @@ A:
 
 Q: What's something you felt proud of in your code, if anything?
 
-A:
+A: I was proud of the sentinel node. It wasn't an easy concept to fully understand.
 
 Q: What's something that was particularly inelegant in your code, if anything?
 
-A:
+A: I used a lot of code and could have condensed it a lot.
 
 Q: What did you learn by talking to your partner about writing LinkedListDeque?
 
-A:
+A: I learned that you can use ++ to denote adding one to a variable.
 
 Q: What do you wish you would have known before writing LinkedListDeque, if anything?
 
-A:
+A: I would have wanted to understand the sentinel node better.
 
 Q: If you wrote LinkedListDeque again, what would you do differently, if anything?
 
-A:
+A: I would make sure to write a circular sentinel node from the beginning.
 
 -----
 
@@ -60,4 +60,4 @@ Meta:
 
 Q: Did you like this design review process? Anything we should do differently next time?
 
-A: 
+A: I liked it. I learned a lot.
