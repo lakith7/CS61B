@@ -13,7 +13,7 @@ public class TestArrayDequeGold {
         int[] tracking = new int[10];
 
         while (tracker < 7) {
-            m = StdRandom.uniform(10);
+            m = StdRandom.uniform(1000);
             tester.addLast(m);
             actuality.addLast(m);
             tracking[tracker] = m;
@@ -25,7 +25,6 @@ public class TestArrayDequeGold {
         while (tracker > 0) {
             Integer actual = actuality.removeLast();
             Integer test = tester.removeLast();
-            String message = stringer(actual, tracking);
             int index = 0;
             Integer h = 0;
             String messaging = "";
@@ -34,9 +33,10 @@ public class TestArrayDequeGold {
                 h = tracking[index];
                 index += 1;
             }
+            messaging += "\naddLast(" + actual + ")";
             messaging += "\nremoveLast()";
 
-            assertEquals(messaging, h, test);
+            assertEquals(messaging, actual, test);
             tracker -= 1;
         }
 
