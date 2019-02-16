@@ -46,7 +46,7 @@ public class TestArrayDequeGold {
 
     public String stringer(int a, int[] b) {
         int index = 0;
-        String messaging = null;
+        String messaging = "";
         while (b[index] != a) {
             messaging += "\naddLast(" + b[index] + ")";
             index += 1;
