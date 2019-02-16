@@ -11,19 +11,6 @@ public class TestArrayDequeGold {
         int m = 0;
         int n = 0;
         int[] tracking = new int[10];
-        while (tracker < 10) {
-            m = StdRandom.uniform(100);
-            tester.addFirst(m);
-            actuality.addFirst(m);
-            tracker += 1;
-        }
-
-        while (tracker > 0) {
-            Integer actual = actuality.removeFirst();
-            Integer test = tester.removeFirst();
-            assertEquals("\naddFirst(" + actual + ")\nremoveFirst()", actual, test);
-            tracker -= 1;
-        }
 
         while (tracker < 10) {
             m = StdRandom.uniform(100);
