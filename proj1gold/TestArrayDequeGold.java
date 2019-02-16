@@ -62,7 +62,7 @@ public class TestArrayDequeGold {
             messaging += "\nremoveLast()";
         }
         if (!c) {
-            messaging += "\nremoveFirst()";
+            messaging += "\nremoveLast()";
         }
         return messaging;
     }
