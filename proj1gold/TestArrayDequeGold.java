@@ -3,7 +3,11 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class TestArrayDequeGold {
-
+/*
+    public static void main(String[] args) {
+        StudentArrayDeque<Integer> test = new StudentArrayDeque<>();
+        ArrayDequeSolution<Integer> actual = new ArrayDequeSolution<>();
+    } */
 
     @Test
     public void testUpdateArray() {
@@ -14,18 +18,19 @@ public class TestArrayDequeGold {
         int wrong = 0;
         int index = 0;
         String message = "";
-        while (index < 100) {
+        while (index < 10) {
             holder = StdRandom.uniform(1000);
             test.addLast(holder);
             actual.addLast(holder);
             index += 1;
         }
 
+        message = stringer(actual);
+
         while (index > 0) {
-            message = stringer(actual);
             correct = actual.removeLast();
             wrong = test.removeLast();
-            assertEquals(message, correct, wrong);
+            assertEquals(message, wrong, correct);
             index -= 1;
         }
 
