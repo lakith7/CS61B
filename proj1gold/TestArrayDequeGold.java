@@ -9,61 +9,38 @@ public class TestArrayDequeGold {
     public void testUpdateArray() {
         StudentArrayDeque<Integer> test = new StudentArrayDeque<>();
         ArrayDequeSolution<Integer> actual = new ArrayDequeSolution<>();
-        int repeater = 0;
+        int holder = 0;
         int correct = 0;
         int wrong = 0;
+        int index = 0;
         String message = "";
-        while (repeater < 500) {
-            int checker = StdRandom.uniform(1, 3);
-            if (checker == 1) {
-                int holder = StdRandom.uniform(1000);
-                test.addFirst(holder);
-                actual.addFirst(holder);
-            }
-            if (checker == 2) {
-                int holder = StdRandom.uniform(1000);
-                test.addLast(holder);
-                actual.addLast(holder);
-            }
-            repeater += 1;
+        while (index < 100) {
+            holder = StdRandom.uniform(1000);
+            test.addLast(holder);
+            actual.addLast(holder);
+            index += 1;
         }
 
-
-        while (repeater > 50) {
-            int checker = StdRandom.uniform(1, 3);
-            if (checker == 1) {
-                correct = actual.removeFirst();
-                wrong = test.removeFirst();
-                message = stringer(correct, actual, false);
-                assertEquals(message, correct, wrong);
-            }
-
-            if (checker == 2) {
-                correct = actual.removeLast();
-                wrong = test.removeLast();
-                message = stringer(correct, actual, true);
-                assertEquals(message, correct, wrong);
-            }
-            repeater -= 1;
+        while (index > 0) {
+            message = stringer(actual);
+            correct = actual.removeLast();
+            wrong = test.removeLast();
+            assertEquals(message, correct, wrong);
+            index -= 1;
         }
 
     }
 
 
-    public String stringer(int a, ArrayDequeSolution<Integer> b, boolean c) {
+    public String stringer(ArrayDequeSolution<Integer> b) {
         String messaging = "";
-        int index = 0;
-        while (index < b.size()) {
-            messaging += "\naddLast(" + b.removeFirst() + ")";
-            index += 1;
+        int indexer = 0;
+        int size = b.size();
+        while (indexer < size) {
+            messaging += "\naddLast(" + b.get(indexer) + ")";
+            indexer += 1;
         }
-        messaging += "\naddLast(" + a + ")";
-        if (c) {
-            messaging += "\nremoveLast()";
-        }
-        if (!c) {
-            messaging += "\nremoveLast()";
-        }
+        messaging += "\nremoveLast()";
         return messaging;
     }
 
