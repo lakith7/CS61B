@@ -4,6 +4,7 @@ import huglife.Creature;
 import huglife.Direction;
 import huglife.Action;
 import huglife.Occupant;
+import huglife.HugLifeUtils;
 
 import java.awt.Color;
 import java.util.ArrayDeque;
@@ -57,7 +58,18 @@ public class Plip extends Creature {
      * that you get this exactly correct.
      */
     public Color color() {
-        g = 63;
+        r = 99;
+        b = 76;
+        if (this.energy == 2) {
+            g = 255;
+        } else {
+            g = (96 * (int) this.energy) + 63;
+        }
+        if (this.energy == 0) {
+            g = 63;
+        } else {
+            g = (96 * (int) this.energy) + 63;
+        }
         return color(r, g, b);
     }
 
@@ -74,7 +86,11 @@ public class Plip extends Creature {
      * private static final variable. This is not required for this lab.
      */
     public void move() {
-        // TODO
+        if (this.energy - 0.15 < 0) {
+            this.energy = 0;
+        } else {
+            this.energy -= 0.15;
+        }
     }
 
 
@@ -82,8 +98,13 @@ public class Plip extends Creature {
      * Plips gain 0.2 energy when staying due to photosynthesis.
      */
     public void stay() {
-        // TODO
+        if (this.energy + 0.2 > 2) {
+            this.energy = 2;
+        } else {
+            this.energy += 0.2;
+        }
     }
+
 
     /**
      * Plips and their offspring each get 50% of the energy, with none
@@ -91,7 +112,10 @@ public class Plip extends Creature {
      * Plip.
      */
     public Plip replicate() {
-        return this;
+        double holder = this.energy();
+        this.energy = (holder/2);
+        Plip y = new Plip(holder/2);
+        return y;
     }
 
     /**
@@ -109,6 +133,9 @@ public class Plip extends Creature {
      */
     public Action chooseAction(Map<Direction, Occupant> neighbors) {
         // Rule 1
+        if (neighbors.get(Direction.TOP).name().equals("empty") && neighbors.get(Direction.BOTTOM).name().equals("empty") && neighbors.get(Direction.LEFT).name().equals("empty") && neighbors.get(Direction.RIGHT).name().equals("empty")) {
+            return new Action(Action.ActionType.STAY);
+        }
         Deque<Direction> emptyNeighbors = new ArrayDeque<>();
         boolean anyClorus = false;
         // TODO
@@ -121,8 +148,19 @@ public class Plip extends Creature {
 
         // Rule 2
         // HINT: randomEntry(emptyNeighbors)
+        if (this.energy >= 1) {
+            this.replicate();
+            return new Action(Action.ActionType.MOVE, HugLifeUtils.randomEntry(emptyNeighbors));
+        }
 
         // Rule 3
+
+        double checker = Math.random();
+        if (checker < 0.5) {
+            if (neighbors.get(Direction.TOP).name().equals("clorus") || neighbors.get(Direction.BOTTOM).name().equals("clorus") || neighbors.get(Direction.LEFT).name().equals("clorus") || neighbors.get(Direction.RIGHT).name().equals("clorus")) {
+                return new Action(Action.ActionType.MOVE, HugLifeUtils.randomEntry(emptyNeighbors));
+            }
+        }
 
         // Rule 4
         return new Action(Action.ActionType.STAY);
