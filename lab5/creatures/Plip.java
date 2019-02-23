@@ -138,7 +138,6 @@ public class Plip extends Creature {
         boolean anyClorus = false;
         // TODO
         // (Google: Enhanced for-loop over keys of NEIGHBORS?)
-        int i = 0;
         if (neighbors.get(Direction.TOP).name().equals("empty")) {
             emptyNeighbors.addFirst(Direction.TOP);
         }
