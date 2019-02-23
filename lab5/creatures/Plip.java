@@ -133,24 +133,37 @@ public class Plip extends Creature {
      */
     public Action chooseAction(Map<Direction, Occupant> neighbors) {
         // Rule 1
-        if (neighbors.get(Direction.TOP).name().equals("empty") && neighbors.get(Direction.BOTTOM).name().equals("empty") && neighbors.get(Direction.LEFT).name().equals("empty") && neighbors.get(Direction.RIGHT).name().equals("empty")) {
-            return new Action(Action.ActionType.STAY);
-        }
+
         Deque<Direction> emptyNeighbors = new ArrayDeque<>();
         boolean anyClorus = false;
         // TODO
         // (Google: Enhanced for-loop over keys of NEIGHBORS?)
-        // for () {...}
+        int i = 0;
+        if (neighbors.get(Direction.TOP).name().equals("empty")) {
+            emptyNeighbors.addFirst(Direction.TOP);
+        }
 
-        if (false) { // FIXME
-            // TODO
+        if (neighbors.get(Direction.BOTTOM).name().equals("empty")) {
+            emptyNeighbors.addFirst(Direction.BOTTOM);
+        }
+
+        if (neighbors.get(Direction.LEFT).name().equals("empty")) {
+            emptyNeighbors.addFirst(Direction.LEFT);
+        }
+
+        if (neighbors.get(Direction.RIGHT).name().equals("empty")) {
+            emptyNeighbors.addFirst(Direction.RIGHT);
+        }
+
+
+        if (emptyNeighbors.isEmpty()) {
+            return new Action(Action.ActionType.STAY);
         }
 
         // Rule 2
         // HINT: randomEntry(emptyNeighbors)
         if (this.energy >= 1) {
-            this.replicate();
-            return new Action(Action.ActionType.MOVE, HugLifeUtils.randomEntry(emptyNeighbors));
+            return new Action(Action.ActionType.REPLICATE, HugLifeUtils.randomEntry(emptyNeighbors));
         }
 
         // Rule 3
