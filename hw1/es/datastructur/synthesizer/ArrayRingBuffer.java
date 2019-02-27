@@ -13,7 +13,7 @@ public class ArrayRingBuffer<T> implements BoundedQueue <T> {
     private T[] rb;
     private int length;
 
-    public class ArrayRingIterator implements Iterator<T> {
+    private class ArrayRingIterator implements Iterator<T> {
         public int pos;
         public ArrayRingIterator() {
             pos = 0;
@@ -95,7 +95,7 @@ public class ArrayRingBuffer<T> implements BoundedQueue <T> {
         return holder;
     }
 
-    public boolean contains(T item) {
+    private boolean contains(T item) {
         for (T element: this) {
             if (element.equals(item)) {
                 return true;
