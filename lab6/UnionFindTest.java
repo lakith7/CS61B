@@ -10,7 +10,9 @@ public class UnionFindTest {
         tester.union(2, 1);
         tester.union(7, 6);
         tester.union(5, 4);
+        tester.union(3, 0);
         int size = tester.sizeOf(1);
-        assertEquals(size, 3);
+        assertEquals(size, 4);
+        assertTrue(tester.connected(3, 1));
     }
 }
