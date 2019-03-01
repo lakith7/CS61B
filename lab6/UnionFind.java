@@ -23,14 +23,13 @@ public class UnionFind {
 
     /* Returns the size of the set v1 belongs to. */
     public int sizeOf(int v1) {
+        if (holder[v1] == v1) {
+            return 1;
+        }
         if (holder[v1] < 0) {
             return holder[v1] * -1;
         } else {
-            int tracker = v1;
-            while (tracker > 0) {
-                tracker = holder[holder[v1]];
-            }
-            return tracker * -1;
+            return holder[find(v1)] * -1;
         }
     }
 
@@ -40,7 +39,7 @@ public class UnionFind {
         if (v1 < 0) {
             return v1;
         }
-        return holder[holder[v1]];
+        return holder[v1];
     }
 
     /* Returns true if nodes v1 and v2 are connected. */
@@ -68,35 +67,43 @@ public class UnionFind {
        vertex with itself or vertices that are already connected should not 
        change the sets but may alter the internal structure of the data. */
     public void union(int v1, int v2) {
+        validate(v1);
+        validate(v2);
         if (sizeOf(v1) == sizeOf(v2)) {
+            if (sizeOf(v1) == 1) {
+                holder[v2] = -2;
+                holder[v1] = v2;
+            } else {
+                int root1 = find(v1);
+                int root2 = find(v2);
+                holder[root2] += holder[root1];
+                holder[root1] = root2;
+            }
+        } else if (sizeOf(v1) < sizeOf(v2)) {
             int root1 = find(v1);
             int root2 = find(v2);
-            holder[root2] += holder[root1];
-            holder[root1] = root2;
-        }
-        if (sizeOf(v1) < sizeOf(v2)) {
-            int root1 = find(v1);
-            int root2 = find(v2);
-            holder[root2] += holder[root1];
-            holder[root1] = root2;
-        }
-        if (sizeOf(v1) > sizeOf(v2)) {
+            holder[root2] -= sizeOf(root1);
+            holder[root1] = v2;
+        } else if (sizeOf(v1) > sizeOf(v2)) {
             int root1 = find(v2);
             int root2 = find(v1);
-            holder[root2] += holder[root1];
-            holder[root1] = root2;
+            holder[root2] -= sizeOf(root1);
+            holder[root1] = v1;
         }
     }
 
     /* Returns the root of the set V belongs to. Path-compression is employed
        allowing for fast search-time. */
     public int find(int vertex) {
+        if (holder[vertex] == vertex) {
+            return vertex;
+        }
         int parent1 = vertex;
         int parent2 = vertex;
         while (parent1 > 0) {
             parent2 = parent1;
             parent1 = parent(parent1);
         }
-        return parent2;
+        return parent1;
     }
 }
