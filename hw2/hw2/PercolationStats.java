@@ -12,10 +12,10 @@ public class PercolationStats {
             throw new java.lang.IllegalArgumentException();
         }
         amount = (double) T;
-        Percolation tester = pF.make(N);
         testing = new double[T];
         int i = 0;
         while (i < T) {
+            Percolation tester = pF.make(N);
             int opened = 0;
             while (!tester.percolates()) {
                 tester.open(StdRandom.uniform(N), StdRandom.uniform(N));

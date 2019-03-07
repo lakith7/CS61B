@@ -106,6 +106,12 @@ public class Percolation {
     }
 
     public boolean percolates() {
+        if (size == 1) {
+            if (!isOpen(0,0)) {
+                return false;
+            }
+            return true;
+        }
         return (connector.connected(0, (size * size) + 1));
     }
 
@@ -120,6 +126,8 @@ public class Percolation {
         System.out.println(item.percolates());
         System.out.println(item.numberOfOpenSites());
         System.out.println(item.percolates());
+        Percolation tester = new Percolation(1);
+        System.out.println(tester.percolates());
     }
 
 }
