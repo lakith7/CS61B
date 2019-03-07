@@ -15,13 +15,27 @@ public class PercolationStats {
         testing = new double[T];
         int i = 0;
         while (i < T) {
+            int y = 0;
+            int[] randRow = new int[N];
+            int[] randCol = new int[N];
+            while (y < N) {
+                randRow[y] = y;
+                randCol[y] = y;
+                y += 1;
+            }
+            StdRandom.shuffle(randRow);
+            StdRandom.shuffle(randCol);
             Percolation tester = pF.make(N);
             int opened = 0;
             while (!tester.percolates()) {
-                tester.open(StdRandom.uniform(N), StdRandom.uniform(N));
-                opened += 1;
+                int x = randRow[StdRandom.uniform(20)];
+                int z = randCol[StdRandom.uniform(20)];
+                if (!tester.isOpen(x, z)) {
+                    tester.open(x, z);
+                    opened += 1;
+                }
             }
-            testing[i] = ((double) opened / (double) (N * N));
+            testing[i] = (((double) opened) / ((double) (N * N)));
             i += 1;
         }
 
@@ -45,7 +59,7 @@ public class PercolationStats {
 
     public static void main(String[] args) {
         PercolationStats tester = new PercolationStats(20, 10, new PercolationFactory());
-        System.out.println(tester.confidenceHigh());
+        System.out.println(tester.mean());
     }
 
 }
