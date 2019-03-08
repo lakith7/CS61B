@@ -40,16 +40,11 @@ public class PercolationStats {
     }
 
     public double confidenceLow() {
-        return (mean() - ((1.96 * stddev())/(java.lang.Math.sqrt(amount))));
+        return (mean() - ((1.96 * stddev()) / (java.lang.Math.sqrt(amount))));
     }
 
     public double confidenceHigh() {
-        return (mean() + ((1.96 * stddev())/(java.lang.Math.sqrt(amount))));
-    }
-
-    public static void main(String[] args) {
-        PercolationStats tester = new PercolationStats(20, 10, new PercolationFactory());
-        System.out.println(tester.mean());
+        return (mean() + ((1.96 * stddev()) / (java.lang.Math.sqrt(amount))));
     }
 
 }

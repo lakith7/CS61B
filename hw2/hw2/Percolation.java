@@ -33,13 +33,13 @@ public class Percolation {
         }
     }
 
-    public void confirmer(int row, int col) {
-        if (row > (size-1) || col > (size - 1) || row < 0 || col < 0) {
+    private void confirmer(int row, int col) {
+        if (row > (size - 1) || col > (size - 1) || row < 0 || col < 0) {
             throw new java.lang.IndexOutOfBoundsException();
         }
     }
 
-    public int converter(int row, int col) {
+    private int converter(int row, int col) {
         return ((row * size) + col + 1);
     }
 
@@ -54,19 +54,19 @@ public class Percolation {
         int topRow = row - 1;
         int topCol = col;
         int leftRow = row;
-        int leftCol = col -1;
+        int leftCol = col - 1;
         int rightRow = row;
         int rightCol = col + 1;
         int bottomRow = row + 1;
         int bottomCol = col;
         if (topRow < size && topCol < size && topRow > -1 && topCol > -1) {
-            if (isOpen(topRow,topCol)) {
+            if (isOpen(topRow, topCol)) {
                 connector.union(holder, converter(topRow, topCol));
                 percolator.union(holder, converter(topRow, topCol));
             }
         }
         if (leftRow < size && leftCol < size && leftRow > -1 && leftCol > -1) {
-            if (isOpen(leftRow,leftCol)) {
+            if (isOpen(leftRow, leftCol)) {
                 connector.union(holder, converter(leftRow, leftCol));
                 percolator.union(holder, converter(leftRow, leftCol));
             }
@@ -78,7 +78,7 @@ public class Percolation {
             }
         }
         if (rightRow < size && rightCol < size && rightRow > -1 && rightCol > -1) {
-            if (isOpen(rightRow,rightCol)) {
+            if (isOpen(rightRow, rightCol)) {
                 connector.union(holder, converter(rightRow, rightCol));
                 percolator.union(holder, converter(rightRow, rightCol));
             }
@@ -107,7 +107,7 @@ public class Percolation {
 
     public boolean percolates() {
         if (size == 1) {
-            if (!isOpen(0,0)) {
+            if (!isOpen(0, 0)) {
                 return false;
             }
             return true;
