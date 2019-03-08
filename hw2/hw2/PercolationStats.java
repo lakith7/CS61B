@@ -18,8 +18,8 @@ public class PercolationStats {
             Percolation tester = pF.make(N);
             int opened = 0;
             while (!tester.percolates()) {
-                int x = StdRandom.uniform(20);
-                int z = StdRandom.uniform(20);
+                int x = StdRandom.uniform(N);
+                int z = StdRandom.uniform(N);
                 if (!tester.isOpen(x, z)) {
                     tester.open(x, z);
                     opened += 1;
