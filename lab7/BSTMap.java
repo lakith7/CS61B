@@ -24,6 +24,10 @@ public class BSTMap<K extends Comparable <K>, V> implements Map61B<K, V> {
 
     }
 
+    public BSTMap() {
+        root = new Node(null, null, 0);
+    }
+
     public void clear() {
         root.left = null;
         root.right = null;
@@ -57,22 +61,46 @@ public class BSTMap<K extends Comparable <K>, V> implements Map61B<K, V> {
         return null;
     }
 
+    private int size(Node n) {
+        if (n == null) {
+            return 0;
+        }
+        return n.size + size(n.left) + size(n.right);
+    }
+
     public int size() {
-        return root.size;
+        if (root == null) {
+            return 0;
+        }
+        return size(root);
     }
 
     public void put(K key, V value) {
         Node helper = root;
         int x = 0;
-        while (x == 0) {
-            if (key.compareTo(helper.key) < 0) {
-                helper = helper.left;
-            } else if (key.compareTo(helper.key) > 0) {
-                helper = helper.right;
-            } else {
-                helper.value = value;
-                x = 1;
-                helper.size = helper.left.size + helper.right.size + 1;
+        if (root.key == null) {
+            root.key = key;
+            root.value = value;
+            root.size += 1;
+        } else {
+            while (x == 0) {
+                if (key.compareTo(helper.key) < 0) {
+                    if (helper.left == null) {
+                        helper.left = new Node(key, value, 1);
+                        x = 1;
+                    }
+                    helper = helper.left;
+                } else if (key.compareTo(helper.key) > 0) {
+                    if (helper.right == null) {
+                        helper.right = new Node(key, value, 1);
+                        x = 1;
+                    }
+                    helper = helper.right;
+                } else {
+                    helper.value = value;
+                    x = 1;
+                    helper.size = helper.left.size + helper.right.size + 1;
+                }
             }
         }
     }
