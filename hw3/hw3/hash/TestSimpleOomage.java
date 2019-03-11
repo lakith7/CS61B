@@ -3,7 +3,6 @@ package hw3.hash;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-import java.util.Set;
 import java.util.HashSet;
 import java.util.List;
 import java.util.ArrayList;
@@ -22,7 +21,6 @@ public class TestSimpleOomage {
 
     @Test
     public void testHashCodePerfect() {
-        /* TODO: Write a test that ensures the hashCode is perfect, */
         SimpleOomage test1 = new SimpleOomage(0, 5, 10);
         SimpleOomage test2 = new SimpleOomage(0, 5, 10);
         HashSet<SimpleOomage> testing = new HashSet<SimpleOomage>();
@@ -63,7 +61,6 @@ public class TestSimpleOomage {
         assertTrue(hashSet.contains(ooA2));
     }*/
 
-    /* TODO: Uncomment this test after you finish haveNiceHashCodeSpread in OomageTestUtility */
     @Test
     public void testRandomOomagesHashCodeSpread() {
         List<Oomage> oomages = new ArrayList<>();

@@ -24,7 +24,7 @@ public class SimpleOomage implements Oomage {
             return false;
         }
         SimpleOomage holder = (SimpleOomage) o;
-        return (holder.red == this.red) && (holder.blue == this.blue) && (holder.green == this.green);
+        return (holder.red == red) && (holder.blue == blue) && (holder.green == green);
     }
 
     @Override
@@ -32,7 +32,6 @@ public class SimpleOomage implements Oomage {
         if (!USE_PERFECT_HASH) {
             return red + green + blue;
         } else {
-            // TODO: Write a perfect hash function for Simple Oomages.
             return (red * 1000000) + (green * 1000) + blue;
         }
     }
