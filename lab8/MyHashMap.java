@@ -5,13 +5,13 @@ import java.util.HashSet;
 
 public class MyHashMap<K, V> implements Map61B<K, V> {
 
-    public int initialSizeHolder;
-    public double loadFactorHolder;
-    public LinkedList[] arrayHolder;
-    public int sizeHolder;
-    public HashSet<K> keySet;
+    private int initialSizeHolder;
+    private double loadFactorHolder;
+    private LinkedList[] arrayHolder;
+    private int sizeHolder;
+    private HashSet<K> keySet;
 
-    public class Node<K, V> {
+    private class Node<K, V> {
         public K keyHolder;
         public V valueHolder;
 
@@ -94,7 +94,7 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
         return sizeHolder;
     }
 
-    public void resize(int size) {
+    private void resize(int size) {
         LinkedList[] temp = arrayHolder;
         arrayHolder = new LinkedList[size];
         for (int i = 0; i < size; i++) {
