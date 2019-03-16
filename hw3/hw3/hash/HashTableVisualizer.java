@@ -16,7 +16,11 @@ public class HashTableVisualizer {
 
         double scale = 1.0;
         int N = 100;
+<<<<<<< HEAD
         int M = 9;
+=======
+        int M = 10;
+>>>>>>> f6ac002c3d915b067db1761ce0317473193544ab
 
         HashTableDrawingUtility.setScale(scale);
         List<Oomage> oomies = new ArrayList<>();
