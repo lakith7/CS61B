@@ -1,3 +1,5 @@
+package bearmaps;
+
 import java.util.HashMap;
 
 public class ArrayHeapMinPQ<T> implements bearmaps.ExtrinsicMinPQ<T> {
