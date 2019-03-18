@@ -59,9 +59,11 @@ public class ArrayHeapMinPQ<T> implements bearmaps.ExtrinsicMinPQ<T> {
             throw new IllegalArgumentException();
         }
         if (this.size() == 0) {
+            int x;
         } else if ((this.size() + 1) == maxSize) {
             resize(maxSize * 2);
         } else if (maxSize == 4) {
+            int x;
         } else if ((this.size()) < (0.25 * maxSize)) {
             resize(this.size() * 2);
         }
@@ -70,7 +72,7 @@ public class ArrayHeapMinPQ<T> implements bearmaps.ExtrinsicMinPQ<T> {
         minHeap[firstOpen] = holder;
         int temp = firstOpen;
         if (size() == 1) {
-
+            int x;
         } else {
             while (minHeap[temp / 2].getPriority() > minHeap[temp].getPriority()) {
                 minHeap[temp] = minHeap[temp / 2];
@@ -160,7 +162,7 @@ public class ArrayHeapMinPQ<T> implements bearmaps.ExtrinsicMinPQ<T> {
             int index = actualNode.getIndex();
             int left = index * 2;
             int right = index * 2 + 1;
-            int parent = index/2;
+            int parent = index / 2;
             int self = index;
             if (left >= firstOpen) {
                 /* Left and right node don't exist */
@@ -205,10 +207,10 @@ public class ArrayHeapMinPQ<T> implements bearmaps.ExtrinsicMinPQ<T> {
 
     private void swim(int index) {
         PriorityNode selfNode = minHeap[index];
-        PriorityNode parentNode = minHeap[index/2];
-        minHeap[index/2] = selfNode;
+        PriorityNode parentNode = minHeap[index / 2];
+        minHeap[index / 2] = selfNode;
         minHeap[index] = parentNode;
-        selfNode.alterIndex(index/2);
+        selfNode.alterIndex(index / 2);
         parentNode.alterIndex(index);
     }
 
@@ -250,7 +252,7 @@ public class ArrayHeapMinPQ<T> implements bearmaps.ExtrinsicMinPQ<T> {
     private boolean isHeap(int startIndex) {
         int left = startIndex * 2;
         int right = startIndex * 2 + 1;
-        int grandParent = startIndex/2;
+        int grandParent = startIndex / 2;
         int parent  = startIndex;
 
         if ((left >= firstOpen) && (right >= firstOpen) && (grandParent == 0)) {
@@ -259,12 +261,13 @@ public class ArrayHeapMinPQ<T> implements bearmaps.ExtrinsicMinPQ<T> {
 
         if ((left < firstOpen) && (grandParent > 0)) {
             PriorityNode leftNode = minHeap[startIndex * 2];
-            PriorityNode grandParentNode = minHeap[startIndex/2];
+            PriorityNode grandParentNode = minHeap[startIndex / 2];
             PriorityNode parentNode = minHeap[startIndex];
-            return ((leftNode.getPriority() >= parentNode.getPriority()) && (grandParentNode.getPriority() <= parentNode.getPriority()));
+            return ((leftNode.getPriority() >= parentNode.getPriority()) &&
+                    (grandParentNode.getPriority() <= parentNode.getPriority()));
         }
         if (left >= firstOpen) {
-            PriorityNode grandParentNode = minHeap[startIndex/2];
+            PriorityNode grandParentNode = minHeap[startIndex / 2];
             PriorityNode parentNode = minHeap[startIndex];
             return (grandParentNode.getPriority() <= parentNode.getPriority());
         }
@@ -277,12 +280,15 @@ public class ArrayHeapMinPQ<T> implements bearmaps.ExtrinsicMinPQ<T> {
             PriorityNode leftNode = minHeap[startIndex * 2];
             PriorityNode rightNode = minHeap[startIndex * 2 + 1];
             PriorityNode parentNode = minHeap[startIndex];
-            return ((leftNode.getPriority() >= parentNode.getPriority()) && (rightNode.getPriority() >= parentNode.getPriority()));
+            return ((leftNode.getPriority() >= parentNode.getPriority()) &&
+                    (rightNode.getPriority() >= parentNode.getPriority()));
         }
         PriorityNode leftNode = minHeap[startIndex * 2];
         PriorityNode rightNode = minHeap[startIndex * 2 + 1];
-        PriorityNode grandParentNode = minHeap[startIndex/2];
+        PriorityNode grandParentNode = minHeap[startIndex / 2];
         PriorityNode parentNode = minHeap[startIndex];
-        return ((leftNode.getPriority() >= parentNode.getPriority()) && (rightNode.getPriority() >= parentNode.getPriority()) && (grandParentNode.getPriority() < parentNode.getPriority()));
+        return ((leftNode.getPriority() >= parentNode.getPriority()) &&
+                (rightNode.getPriority() >= parentNode.getPriority()) &&
+                (grandParentNode.getPriority() < parentNode.getPriority()));
     }
 }

@@ -60,7 +60,7 @@ public class ArrayHeapMinPQTest {
             temp.add(i, rand.nextInt(100) + 1);
         }
         for (int y = 0; y < 10000; y++) {
-            temp.changePriority(y,rand.nextInt(100) + 1);
+            temp.changePriority(y, rand.nextInt(100) + 1);
         }
         assertEquals(10000, temp.size());
     }
@@ -73,17 +73,18 @@ public class ArrayHeapMinPQTest {
             temp.add(i, rand.nextInt(100) + 1);
         }
         for (int y = 0; y < 1000; y++) {
-            temp.changePriority(rand.nextInt(200000) + 1,rand.nextInt(100) + 1);
+            temp.changePriority(rand.nextInt(200000) + 1, rand.nextInt(100) + 1);
         }
         assertEquals(200000, temp.size());
     }
 
+    /*
     @Test
     public void addLogTest() {
-        /* Creates heaps of larger and larger size and then does add a constant number of times. This second set
+         Creates heaps of larger and larger size and then does add a constant number of times. This second set
         of add is what is timed.
         Constant = 10,000
-         */
+
 
         System.out.println("Log Test for add:");
         ArrayHeapMinPQ<Integer> temp = new ArrayHeapMinPQ<>();
@@ -131,10 +132,10 @@ public class ArrayHeapMinPQTest {
 
     @Test
     public void changePriorityLogTest() {
-        /* Creates heaps of larger and larger size and then does add a constant number of times. This second set
+         Creates heaps of larger and larger size and then does add a constant number of times. This second set
         of add is what is timed.
         Constant = 10,000
-         */
+
         System.out.println("Log Test for changePriority:");
         ArrayHeapMinPQ<Integer> temp = new ArrayHeapMinPQ<>();
         Random rand = new Random();
@@ -181,10 +182,10 @@ public class ArrayHeapMinPQTest {
 
     @Test
     public void removeSmallestLogTest() {
-        /* Creates heaps of larger and larger size and then does add a constant number of times. This second set
+         Creates heaps of larger and larger size and then does add a constant number of times. This second set
         of add is what is timed.
         Constant = 10,000
-         */
+
         System.out.println("Log Test for removeSmallest:");
         ArrayHeapMinPQ<Integer> temp = new ArrayHeapMinPQ<>();
         Random rand = new Random();
@@ -231,10 +232,10 @@ public class ArrayHeapMinPQTest {
 
     @Test
     public void getSmallestLogTest() {
-        /* Creates heaps of larger and larger size and then does add a constant number of times. This second set
+         Creates heaps of larger and larger size and then does add a constant number of times. This second set
         of add is what is timed.
         Constant = 10,000
-         */
+
         System.out.println("Log Test for getSmallest:");
         ArrayHeapMinPQ<Integer> temp = new ArrayHeapMinPQ<>();
         Random rand = new Random();
@@ -281,10 +282,10 @@ public class ArrayHeapMinPQTest {
 
     @Test
     public void containsLogTest() {
-        /* Creates heaps of larger and larger size and then does add a constant number of times. This second set
+        Creates heaps of larger and larger size and then does add a constant number of times. This second set
         of add is what is timed.
         Constant = 10,000
-         */
+
         System.out.println("Log Test for contains:");
         ArrayHeapMinPQ<Integer> temp = new ArrayHeapMinPQ<>();
         Random rand = new Random();
@@ -331,10 +332,10 @@ public class ArrayHeapMinPQTest {
 
     @Test
     public void sizeLogTest() {
-        /* Creates heaps of larger and larger size and then does add a constant number of times. This second set
+        Creates heaps of larger and larger size and then does add a constant number of times. This second set
         of add is what is timed.
         Constant = 10,000
-         */
+
         System.out.println("Log Test for size:");
         ArrayHeapMinPQ<Integer> temp = new ArrayHeapMinPQ<>();
         Random rand = new Random();
@@ -378,6 +379,8 @@ public class ArrayHeapMinPQTest {
         System.out.println("Total time elapsed (Ten Million): " + timer3.elapsedTime() +  " seconds.");
 
     }
+
+    */
 
     public static void printFancyHeapDrawing(Object[] items) {
         String drawing = fancyHeapDrawingHelper(items, 1, "");
