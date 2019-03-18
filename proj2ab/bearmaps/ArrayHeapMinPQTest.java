@@ -22,10 +22,46 @@ public class ArrayHeapMinPQTest {
     public void largeSizeTest() {
         ArrayHeapMinPQ<Integer> temp = new ArrayHeapMinPQ<>();
         Random rand = new Random();
-        for (int i = 0; i < 100000; i++) {
+        for (int i = 0; i < 1000000; i++) {
             temp.add(i, rand.nextInt(100) + 1);
         }
-        assertEquals(100000, temp.size());
+        assertEquals(1000000, temp.size());
+    }
+
+    @Test
+    public void allSamePriority() {
+        ArrayHeapMinPQ<Integer> temp = new ArrayHeapMinPQ<>();
+        for (int i = 0; i < 10; i++) {
+            temp.add(i, 2);
+        }
+        printFancyHeapDrawing(temp.returnMinHeap());
+        assertEquals(temp.size(), 10);
+        assertEquals((int) temp.removeSmallest(), 0);
+    }
+
+    @Test
+    public void removeSmallestTest() {
+        ArrayHeapMinPQ<Integer> temp = new ArrayHeapMinPQ<>();
+        for (int i = 0; i < 1000000; i++) {
+            temp.add(i, i + 1);
+        }
+        for (int y = 0; y < 1000000; y++) {
+            temp.removeSmallest();
+        }
+        assertEquals(temp.size(), 0);
+    }
+
+    @Test
+    public void changePriorityLargeTest() {
+        ArrayHeapMinPQ<Integer> temp = new ArrayHeapMinPQ<>();
+        Random rand = new Random();
+        for (int i = 0; i < 100; i++) {
+            temp.add(i, rand.nextInt(100) + 1);
+        }
+        for (int y = 0; y < 100; y++) {
+            temp.changePriority(y,rand.nextInt(100) + 1);
+        }
+        assertEquals(100, temp.size());
     }
 
     public static void printFancyHeapDrawing(Object[] items) {

@@ -61,6 +61,7 @@ public class ArrayHeapMinPQ<T> implements bearmaps.ExtrinsicMinPQ<T> {
         if (this.size() == 0) {
         } else if ((this.size() + 1) == maxSize) {
             resize(maxSize * 2);
+        } else if (maxSize == 4) {
         } else if ((this.size()) < (0.25 * maxSize)) {
             resize(this.size() * 2);
         }
@@ -100,6 +101,9 @@ public class ArrayHeapMinPQ<T> implements bearmaps.ExtrinsicMinPQ<T> {
         }
         T holder = (T) minHeap[1].getItem();
         menu.remove(holder);
+        if (this.size() == 0) {
+            return holder;
+        }
         if ((this.size()) < (maxSize * 0.25)) {
             resize(this.size() * 2);
         }
@@ -108,7 +112,7 @@ public class ArrayHeapMinPQ<T> implements bearmaps.ExtrinsicMinPQ<T> {
         minHeap[1].alterIndex(1);
         int tracker = 1;
         firstOpen -= 1;
-        while (!isHeap(minHeap, 1, firstOpen)) {
+        while (!isHeap(tracker)) {
             int left = tracker * 2;
             int right = tracker * 2 + 1;
             PriorityNode parentNode = minHeap[tracker];
@@ -154,111 +158,62 @@ public class ArrayHeapMinPQ<T> implements bearmaps.ExtrinsicMinPQ<T> {
         int index = actualNode.getIndex();
         actualNode.alterPriority(priority);
         sinkOrSwim(index);
-
-
-        /* Remove the node from the map */
-
-        /* Put the item in the correct place according to the priority */
-
-        /* What if there is no Grandparent Node or Children Node or are only one of those?*/
-        /* Sink/swim the node until it's in the right position */
-        /* while (!isHeap(minHeap, 1, firstOpen)) {
-
-            int left = index * 2;
-            int right = index * 2 + 1;
-            int grandParent = index / 2;
-            if (right >= firstOpen) {
-                PriorityNode parentNode = minHeap[index];
-                PriorityNode leftNode = minHeap[left];
-                int leftIndex = leftNode.getIndex();
-                int parentIndex = parentNode.getIndex();
-                minHeap[index] = leftNode;
-                minHeap[left] = parentNode;
-                leftNode.alterIndex(parentIndex);
-                parentNode.alterIndex(leftIndex);
-                index = left;
-            } else {
-                PriorityNode parentNode = minHeap[index];
-                PriorityNode leftNode = minHeap[left];
-                PriorityNode rightNode = minHeap[right];
-                int rightIndex = rightNode.getIndex();
-                int leftIndex = leftNode.getIndex();
-                int parentIndex = parentNode.getIndex();
-                if ((parentNode.getPriority() <= leftNode.getPriority()) && (parentNode.getPriority() <= rightNode.getPriority())) {
-                    PriorityNode grandParentNode = minHeap[index / 2];
-                    int grandParentIndex = grandParentNode.getIndex();
-                    if (parentNode.getPriority() < grandParentNode.getPriority()) {
-                        minHeap[index / 2] = parentNode;
-                        minHeap[index] = grandParentNode;
-                        parentNode.alterIndex(grandParentIndex);
-                        grandParentNode.alterIndex(parentIndex);
-                        index = index / 2;
-                    }
-                } else if ((parentNode.getPriority() > rightNode.getPriority())) {
-                    minHeap[index] = rightNode;
-                    minHeap[index * 2 + 1] = parentNode;
-                    rightNode.alterIndex(parentIndex);
-                    parentNode.alterIndex(rightIndex);
-                    index = index * 2 + 1;
-                } else if ((parentNode.getPriority() > leftNode.getPriority())) {
-                    minHeap[index] = leftNode;
-                    minHeap[index * 2] = parentNode;
-                    leftNode.alterIndex(parentIndex);
-                    parentNode.alterIndex(leftIndex);
-                    index = index * 2;
-                } else if ((leftNode.getPriority()) > rightNode.getPriority()) {
-                    minHeap[index] = rightNode;
-                    minHeap[right] = parentNode;
-                    rightNode.alterIndex(parentIndex);
-                    parentNode.alterIndex(rightIndex);
-                    index = right;
-                } else if ((leftNode.getPriority()) < rightNode.getPriority()) {
-                    minHeap[index] = leftNode;
-                    minHeap[left] = parentNode;
-                    leftNode.alterIndex(parentIndex);
-                    parentNode.alterIndex(leftIndex);
-                    index = left;
-                }
-            }
-        } */
-
-        /* consider writing a sink and swim helper method, which is basically just the while loop */
-
     }
 
     private void resize(int size) {
         maxSize = size;
         PriorityNode[] temp = minHeap;
-        minHeap = new PriorityNode[size];
-        minHeap[0] = null;
-        for (int i = 1; i < firstOpen; i++) {
-            minHeap[i] = temp[i];
+        if (size == 2) {
+            minHeap = new PriorityNode[3];
+            minHeap[0] = null;
+            minHeap[1] = temp[1];
+            minHeap[2] = temp[2];
+        } else {
+            minHeap = new PriorityNode[size];
+            minHeap[0] = null;
+            for (int i = 1; i < firstOpen; i++) {
+                minHeap[i] = temp[i];
+            }
         }
     }
 
-    private boolean isHeap(PriorityNode[] heap, int startIndex, int firstOpenSlot) {
-
-        if ((startIndex * 2) >= firstOpenSlot) {
-            return true;
-        }
-        if (((startIndex * 2) + 1) >= firstOpenSlot) {
-            if (heap[startIndex * 2].getPriority() < heap[startIndex].getPriority()) {
-                return false;
-            }
-            return true;
-        }
+    private boolean isHeap(int startIndex) {
         int left = startIndex * 2;
         int right = startIndex * 2 + 1;
-        PriorityNode parent = heap[startIndex];
-        PriorityNode leftChild = heap[left];
-        PriorityNode rightChild = heap[right];
-        if (leftChild.getPriority() < parent.getPriority()) {
-            return false;
+        int grandParent = startIndex/2;
+        int parent  = startIndex;
+
+        if ((left >= firstOpen) && (right >= firstOpen) && (grandParent == 0)) {
+            return true;
         }
-        if (rightChild.getPriority() < parent.getPriority()) {
-            return false;
+
+        if ((left < firstOpen) && (grandParent > 0)) {
+            PriorityNode leftNode = minHeap[startIndex * 2];
+            PriorityNode grandParentNode = minHeap[startIndex/2];
+            PriorityNode parentNode = minHeap[startIndex];
+            return ((leftNode.getPriority() >= parentNode.getPriority()) && (grandParentNode.getPriority() <= parentNode.getPriority()));
         }
-        return (isHeap(heap, left, firstOpenSlot) && isHeap(heap, right, firstOpenSlot));
+        if (left >= firstOpen) {
+            PriorityNode grandParentNode = minHeap[startIndex/2];
+            PriorityNode parentNode = minHeap[startIndex];
+            return (grandParentNode.getPriority() <= parentNode.getPriority());
+        }
+        if (grandParent == 0) {
+            if (right >= firstOpen) {
+                PriorityNode leftNode = minHeap[startIndex * 2];
+                PriorityNode parentNode = minHeap[startIndex];
+                return (leftNode.getPriority() > parentNode.getPriority());
+            }
+            PriorityNode leftNode = minHeap[startIndex * 2];
+            PriorityNode rightNode = minHeap[startIndex * 2 + 1];
+            PriorityNode parentNode = minHeap[startIndex];
+            return ((leftNode.getPriority() >= parentNode.getPriority()) && (rightNode.getPriority() >= parentNode.getPriority()));
+        }
+        PriorityNode leftNode = minHeap[startIndex * 2];
+        PriorityNode rightNode = minHeap[startIndex * 2 + 1];
+        PriorityNode grandParentNode = minHeap[startIndex/2];
+        PriorityNode parentNode = minHeap[startIndex];
+        return ((leftNode.getPriority() >= parentNode.getPriority()) && (rightNode.getPriority() >= parentNode.getPriority()) && (grandParentNode.getPriority() < parentNode.getPriority()));
     }
 
     /* This helper method situates an item in the correct place in a heap given the index of the item. Should work for ANY situation. */
@@ -279,14 +234,76 @@ public class ArrayHeapMinPQ<T> implements bearmaps.ExtrinsicMinPQ<T> {
         * because there is no grandparent node (for example) but we try to get its priority.
         * Int Index is the index of the node in the faulty heap that we are trying to fix.
         * */
-        while (!isHeap(minHeap, 1, firstOpen)) {
+        while (!isHeap(index)) {
             int left = index * 2;
             int right = index * 2 + 1;
             int parent = index;
             int grandParent = index / 2;
 
-            /* Both left and right nodes don't exist. */
-            if (left >= firstOpen) {
+            /* all nodes exist */
+            if ((right < firstOpen) && (grandParent != 0)) {
+                PriorityNode parentNode = minHeap[index];
+                PriorityNode leftNode = minHeap[left];
+                PriorityNode rightNode = minHeap[right];
+                PriorityNode grandParentNode = minHeap[grandParent];
+                int rightIndex = rightNode.getIndex();
+                int leftIndex = leftNode.getIndex();
+                int parentIndex = parentNode.getIndex();
+                int grandParentIndex = grandParentNode.getIndex();
+
+
+                /* Situation 2: Grandparent node is greater than the parent node.
+                 * Solution: Switch Grandparent node and parent node
+                 * */
+                if (grandParentNode.getPriority() > parentNode.getPriority()) {
+                    minHeap[parent] = grandParentNode;
+                    minHeap[grandParent] = parentNode;
+                    index = grandParent;
+                    parentNode.alterIndex(grandParentIndex);
+                    grandParentNode.alterIndex(parentIndex);
+
+                    /* Situation 4: Parent node is greater than both of the children.
+                     * Solution: Switch the parent node with the left node if the left node is less than the right node. Switch
+                     * the parent node with the right node if the right node is less than the left node. Switch the parent node
+                     * with the left node if the left node is equal to the right node.
+                     * */
+                } else if ((parentNode.getPriority() > leftNode.getPriority()) && (parentNode.getPriority() > rightNode.getPriority())) {
+                    if (leftNode.getPriority() < rightNode.getPriority()) {
+                        minHeap[left] = parentNode;
+                        minHeap[parent] = leftNode;
+                        index = left;
+                        parentNode.alterIndex(leftIndex);
+                        leftNode.alterIndex(parentIndex);
+                    } else if (rightNode.getPriority() < leftNode.getPriority()) {
+                        minHeap[right] = parentNode;
+                        minHeap[parent] = rightNode;
+                        index = right;
+                        parentNode.alterIndex(rightIndex);
+                        rightNode.alterIndex(parentIndex);
+                    }
+                                    /* Situation 5: Parent node is greater than the left node only. The only part is already implemented
+            through the order we implemented.
+            * Solution: Switch the left node and the parent node
+            * */
+                } else if (parentNode.getPriority() > leftNode.getPriority()) {
+                    minHeap[left] = parentNode;
+                    minHeap[parent] = leftNode;
+                    index = left;
+                    parentNode.alterIndex(leftIndex);
+                    leftNode.alterIndex(parentIndex);
+
+                    /* Situation 6: Parent node is greater than the right node only.
+                     * Solution: Switch the parent node and the right node.
+                     * */
+                } else if (parentNode.getPriority() > rightNode.getPriority()) {
+                    minHeap[right] = parentNode;
+                    minHeap[parent] = rightNode;
+                    index = right;
+                    parentNode.alterIndex(rightIndex);
+                    rightNode.alterIndex(parentIndex);
+                }
+            } else if (left >= firstOpen) {
+                /* Both left and right nodes don't exist. */
                 PriorityNode grandParentNode = minHeap[grandParent];
                 PriorityNode parentNode = minHeap[index];
                 int parentIndex = parentNode.getIndex();
@@ -392,67 +409,6 @@ public class ArrayHeapMinPQ<T> implements bearmaps.ExtrinsicMinPQ<T> {
                  * Solution: Switch the parent node and the right node.
                  * */
             /* Every node exists */
-            } else {
-                PriorityNode parentNode = minHeap[index];
-                PriorityNode leftNode = minHeap[left];
-                PriorityNode rightNode = minHeap[right];
-                PriorityNode grandParentNode = minHeap[grandParent];
-                int rightIndex = rightNode.getIndex();
-                int leftIndex = leftNode.getIndex();
-                int parentIndex = parentNode.getIndex();
-                int grandParentIndex = grandParentNode.getIndex();
-
-
-                /* Situation 2: Grandparent node is greater than the parent node.
-                 * Solution: Switch Grandparent node and parent node
-                 * */
-                if (grandParentNode.getPriority() > parentNode.getPriority()) {
-                    minHeap[parent] = grandParentNode;
-                    minHeap[grandParent] = parentNode;
-                    index = grandParent;
-                    parentNode.alterIndex(grandParentIndex);
-                    grandParentNode.alterIndex(parentIndex);
-
-                    /* Situation 4: Parent node is greater than both of the children.
-                     * Solution: Switch the parent node with the left node if the left node is less than the right node. Switch
-                     * the parent node with the right node if the right node is less than the left node. Switch the parent node
-                     * with the left node if the left node is equal to the right node.
-                     * */
-                } else if ((parentNode.getPriority() > leftNode.getPriority()) && (parentNode.getPriority() > rightNode.getPriority())) {
-                    if (leftNode.getPriority() < rightNode.getPriority()) {
-                        minHeap[left] = parentNode;
-                        minHeap[parent] = leftNode;
-                        index = left;
-                        parentNode.alterIndex(leftIndex);
-                        leftNode.alterIndex(parentIndex);
-                    } else if (rightNode.getPriority() < leftNode.getPriority()) {
-                        minHeap[right] = parentNode;
-                        minHeap[parent] = rightNode;
-                        index = right;
-                        parentNode.alterIndex(rightIndex);
-                        rightNode.alterIndex(parentIndex);
-                    }
-                                    /* Situation 5: Parent node is greater than the left node only. The only part is already implemented
-            through the order we implemented.
-            * Solution: Switch the left node and the parent node
-            * */
-                } else if (parentNode.getPriority() > leftNode.getPriority()) {
-                    minHeap[left] = parentNode;
-                    minHeap[parent] = leftNode;
-                    index = left;
-                    parentNode.alterIndex(leftIndex);
-                    leftNode.alterIndex(parentIndex);
-
-                    /* Situation 6: Parent node is greater than the right node only.
-                     * Solution: Switch the parent node and the right node.
-                     * */
-                } else if (parentNode.getPriority() > rightNode.getPriority()) {
-                    minHeap[right] = parentNode;
-                    minHeap[parent] = rightNode;
-                    index = right;
-                    parentNode.alterIndex(rightIndex);
-                    rightNode.alterIndex(parentIndex);
-                }
             }
         }
     }
