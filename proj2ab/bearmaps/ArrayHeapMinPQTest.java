@@ -20,7 +20,7 @@ public class ArrayHeapMinPQTest {
     @Test
     public void largeSizeTest() {
         ArrayHeapMinPQ<Integer> temp = new ArrayHeapMinPQ<>();
-        for (int i = 0; i < 100000; i++) {
+        for (int i = 0; i < 100000000; i++) {
             temp.add(i, i + 1);
         }
         assertEquals((int) temp.removeSmallest(), 0);

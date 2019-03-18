@@ -68,12 +68,16 @@ public class ArrayHeapMinPQ<T> implements bearmaps.ExtrinsicMinPQ<T> {
         menu.put(item, holder);
         minHeap[firstOpen] = holder;
         int temp = firstOpen;
-        while (!isHeap(minHeap, 1, firstOpen)) {
-            minHeap[temp] = minHeap[temp/2];
-            minHeap[temp/2] = holder;
-            minHeap[temp].alterIndex(temp);
-            minHeap[temp/2].alterIndex(temp/2);
-            temp = temp/2;
+        if (size() == 1) {
+
+        } else {
+            while (minHeap[temp / 2].getPriority() > minHeap[temp].getPriority()) {
+                minHeap[temp] = minHeap[temp / 2];
+                minHeap[temp / 2] = holder;
+                minHeap[temp].alterIndex(temp);
+                minHeap[temp / 2].alterIndex(temp / 2);
+                temp = temp / 2;
+            }
         }
         holder.alterIndex(temp);
         firstOpen += 1;
