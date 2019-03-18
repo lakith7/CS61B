@@ -55,13 +55,26 @@ public class ArrayHeapMinPQTest {
     public void changePriorityLargeTest() {
         ArrayHeapMinPQ<Integer> temp = new ArrayHeapMinPQ<>();
         Random rand = new Random();
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 10000; i++) {
             temp.add(i, rand.nextInt(100) + 1);
         }
-        for (int y = 0; y < 100; y++) {
+        for (int y = 0; y < 10000; y++) {
             temp.changePriority(y,rand.nextInt(100) + 1);
         }
-        assertEquals(100, temp.size());
+        assertEquals(10000, temp.size());
+    }
+
+    @Test
+    public void changePrioritySanityTest() {
+        ArrayHeapMinPQ<Integer> temp = new ArrayHeapMinPQ<>();
+        Random rand = new Random();
+        for (int i = 0; i < 200000; i++) {
+            temp.add(i, rand.nextInt(100) + 1);
+        }
+        for (int y = 0; y < 1000; y++) {
+            temp.changePriority(rand.nextInt(200000) + 1,rand.nextInt(100) + 1);
+        }
+        assertEquals(200000, temp.size());
     }
 
     public static void printFancyHeapDrawing(Object[] items) {
