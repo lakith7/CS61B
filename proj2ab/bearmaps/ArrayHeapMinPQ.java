@@ -77,6 +77,9 @@ public class ArrayHeapMinPQ<T> implements bearmaps.ExtrinsicMinPQ<T> {
                 minHeap[temp].alterIndex(temp);
                 minHeap[temp / 2].alterIndex(temp / 2);
                 temp = temp / 2;
+                if (temp == 1) {
+                    break;
+                }
             }
         }
         holder.alterIndex(temp);

@@ -2,6 +2,7 @@ package bearmaps;
 
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
+import java.util.Random;
 
 public class ArrayHeapMinPQTest {
 
@@ -20,11 +21,11 @@ public class ArrayHeapMinPQTest {
     @Test
     public void largeSizeTest() {
         ArrayHeapMinPQ<Integer> temp = new ArrayHeapMinPQ<>();
-        for (int i = 0; i < 100000000; i++) {
-            temp.add(i, i + 1);
+        Random rand = new Random();
+        for (int i = 0; i < 100000; i++) {
+            temp.add(i, rand.nextInt(100) + 1);
         }
-        assertEquals((int) temp.removeSmallest(), 0);
-
+        assertEquals(100000, temp.size());
     }
 
     public static void printFancyHeapDrawing(Object[] items) {
