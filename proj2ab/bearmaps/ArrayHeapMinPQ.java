@@ -50,6 +50,10 @@ public class ArrayHeapMinPQ<T> implements bearmaps.ExtrinsicMinPQ<T> {
         firstOpen = 1;
     }
 
+    public PriorityNode[] returnMinHeap() {
+        return minHeap;
+    }
+
     public void add(T item, double priority) {
         if (contains(item)) {
             throw new IllegalArgumentException();
@@ -67,6 +71,8 @@ public class ArrayHeapMinPQ<T> implements bearmaps.ExtrinsicMinPQ<T> {
         while (!isHeap(minHeap, 1, firstOpen)) {
             minHeap[temp] = minHeap[temp/2];
             minHeap[temp/2] = holder;
+            minHeap[temp].alterIndex(temp);
+            minHeap[temp/2].alterIndex(temp/2);
             temp = temp/2;
         }
         holder.alterIndex(temp);
@@ -218,7 +224,7 @@ public class ArrayHeapMinPQ<T> implements bearmaps.ExtrinsicMinPQ<T> {
         PriorityNode[] temp = minHeap;
         minHeap = new PriorityNode[size];
         minHeap[0] = null;
-        for (int i = 1; temp[i] != null; i++) {
+        for (int i = 1; i < firstOpen; i++) {
             minHeap[i] = temp[i];
         }
     }
