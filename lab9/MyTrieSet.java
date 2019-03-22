@@ -16,6 +16,9 @@ public class MyTrieSet implements TrieSet61B {
             value = x;
             map = new HashMap<Character, Node>();
         }
+        private boolean color() {
+            return isKey;
+        }
         private void addToMap() {
 
         }
@@ -43,7 +46,7 @@ public class MyTrieSet implements TrieSet61B {
             start = start.map.get(c);
         }
         /* Does contains refer to whether the string is in the trie or whether the end of the string is a blue node */
-        return true;
+        return start.color();
     }
 
 
@@ -80,6 +83,7 @@ public class MyTrieSet implements TrieSet61B {
         }
         return holder;
     }
+
 
     public String longestPrefixOf(String key) {
         throw new UnsupportedOperationException();
