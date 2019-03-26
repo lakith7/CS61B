@@ -288,6 +288,7 @@ public class ArrayHeapMinPQ<T> implements bearmaps.ExtrinsicMinPQ<T> {
         PriorityNode grandParentNode = minHeap[startIndex / 2];
         PriorityNode parentNode = minHeap[startIndex];
         return ((leftNode.getPriority() >= parentNode.getPriority())
-                && (rightNode.getPriority() >= parentNode.getPriority()) && (grandParentNode.getPriority() < parentNode.getPriority()));
+                && (rightNode.getPriority() >= parentNode.getPriority())
+                && (grandParentNode.getPriority() < parentNode.getPriority()));
     }
 }
