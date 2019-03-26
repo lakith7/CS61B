@@ -72,19 +72,19 @@ public class KDTreeTest {
     public void testTimeKDTree() {
         /* Time test for the KDTree solution. */
         Stopwatch timer = new Stopwatch();
-        ArrayList<Point> holder = new LinkedList<>();
+        ArrayList<Point> holder = new ArrayList<>();
         Random rand = new Random();
-        for (int i = 0; i < 1000000; i++) {
+        for (int i = 0; i < 100000; i++) {
             Point tester = new Point(rand.nextDouble(), rand.nextDouble());
             holder.add(tester);
         }
         KDTree test2 = new KDTree(holder);
-        for (int y = 0; y < 100000; y++) {
+        for (int y = 0; y < 10000; y++) {
             double xVal = rand.nextDouble();
             double yVal = rand.nextDouble();
             Point tester2 = test2.nearest(xVal, yVal);
         }
-        System.out.println("Total time elapsed: " + timer.elapsedTime() +  " seconds.");
+        System.out.println("Total time elapsed for KDTree: " + timer.elapsedTime() +  " seconds.");
     }
 
     @Test
@@ -94,17 +94,17 @@ public class KDTreeTest {
         Stopwatch timer = new Stopwatch();
         ArrayList<Point> holder = new ArrayList<>();
         Random rand = new Random();
-        for (int i = 0; i < 1000000; i++) {
+        for (int i = 0; i < 100000; i++) {
             Point tester = new Point(rand.nextDouble(), rand.nextDouble());
             holder.add(tester);
         }
         NaivePointSet test1 = new NaivePointSet(holder);
-        for (int y = 0; y < 100000; y++) {
+        for (int y = 0; y < 10000; y++) {
             double xVal = rand.nextDouble();
             double yVal = rand.nextDouble();
             Point tester1 = test1.nearest(xVal, yVal);
         }
-        System.out.println("Total time elapsed: " + timer.elapsedTime() +  " seconds.");
+        System.out.println("Total time elapsed for NaivePointSet: " + timer.elapsedTime() +  " seconds.");
     }
 
     private List<Point> randomPoints(int N) {
