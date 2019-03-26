@@ -1,6 +1,7 @@
 package bearmaps;
 
 import java.util.List;
+import java.util.ArrayList;
 
 public class KDTree implements PointSet {
 
@@ -10,7 +11,8 @@ public class KDTree implements PointSet {
         private Point point;
         private Node leftChild;
         private Node rightChild;
-        /* If true, it is an left/right node. If it is false, it is an up/down node*/
+        /* If true, it is an up/down (compare yVal) node.
+        If it is false, it is an left/right (compare xVal) node*/
         private boolean orientation;
 
         public Node(Point actualPoint, Node left, Node right) {
@@ -45,7 +47,7 @@ public class KDTree implements PointSet {
 
         /* Returns the square distance, not the sqrt version. */
         public double distance(Point comparison) {
-            return comparison.distance(comparison, point);
+            return Point.distance(comparison, point);
         }
 
         public void changePoint(Point newPoint) {
@@ -105,6 +107,12 @@ public class KDTree implements PointSet {
     /* Assume points had at least one point */
     /* Should create the initial KDTree with leftChildren and rightChildren */
     public KDTree(List<Point> points) {
+        ArrayList<Point> holder = new ArrayList<>();
+        int size = points.size();
+        for (int i = 0; i < size; i++) {
+            holder.add(i, points.get(i));
+        }
+        points = holder;
         rootNode = new Node(points.get(0), null, null);
         for (int i = 1; i < points.size(); i++) {
             Node insertion = new Node(points.get(i), null, null);
@@ -121,7 +129,7 @@ public class KDTree implements PointSet {
     }
 
     /* Used the help given to us in the pseudo walkthrough video */
-    public Node nearest(Node input, Point comparison, Node closest) {
+    private Node nearest(Node input, Point comparison, Node closest) {
         if (input == null) {
             return closest;
         }
@@ -132,7 +140,7 @@ public class KDTree implements PointSet {
         Node goodSide;
         Node badSide;
         /* If node is a left/right node. */
-        if (input.getOrientation()) {
+        if (!input.getOrientation()) {
             if (comparison.getX() < input.getXVal()) {
                 goodSide = input.getLeftChild();
                 badSide = input.getRightChild();
@@ -153,7 +161,7 @@ public class KDTree implements PointSet {
         closest = nearest(goodSide, comparison, closest);
         /* If node is a left/right node.
         * Checks if badSide can have the closest node. */
-        if (input.getOrientation()) {
+        if (!input.getOrientation()) {
             if (((comparison.getX() - input.getXVal()) * (comparison.getX() - input.getXVal()))
                     < closest.distance(comparison)) {
                 closest = nearest(badSide, comparison, closest);

@@ -14,9 +14,9 @@ public class NaivePointSet implements PointSet{
         int size = listOfPoints.size();
         Point comparison = new Point(x, y);
         Point actualPoint = listOfPoints.get(0);
-        double distance = comparison.distance(comparison, listOfPoints.get(0));
+        double distance = Point.distance(comparison, listOfPoints.get(0));
         for (int i = 1; i < size; i++) {
-            double actualDistance = comparison.distance(comparison, listOfPoints.get(i));
+            double actualDistance = Point.distance(comparison, listOfPoints.get(i));
             if (actualDistance < distance) {
                 distance = actualDistance;
                 actualPoint = listOfPoints.get(i);
