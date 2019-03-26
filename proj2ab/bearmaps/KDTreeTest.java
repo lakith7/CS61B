@@ -104,7 +104,7 @@ public class KDTreeTest {
             double yVal = rand.nextDouble();
             Point tester1 = test1.nearest(xVal, yVal);
         }
-        System.out.println("Total time elapsed for NaivePointSet: " + timer.elapsedTime() +  " seconds.");
+        System.out.println("Total time elapsed for NPS: " + timer.elapsedTime() +  " seconds.");
     }
 
     private List<Point> randomPoints(int N) {

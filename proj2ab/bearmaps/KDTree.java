@@ -15,7 +15,7 @@ public class KDTree implements PointSet {
         If it is false, it is an left/right (compare xVal) node*/
         private boolean orientation;
 
-        public Node(Point actualPoint, Node left, Node right) {
+        private Node(Point actualPoint, Node left, Node right) {
             point = actualPoint;
             leftChild = left;
             rightChild = right;
@@ -176,17 +176,4 @@ public class KDTree implements PointSet {
         }
         return closest;
     }
-
-    public static void main(String args[]) {
-        Point p1 = new Point(2, 3); // constructs a Point with x = 1.1, y = 2.2
-        Point p2 = new Point(4, 2);
-        Point p3 = new Point(4, 5);
-        Point p4 = new Point(3, 3);
-        Point p5 = new Point(1, 5);
-        Point p6 = new Point(4, 4);
-        KDTree tester = new KDTree(List.of(p1, p2, p3, p4, p5, p6));
-        Point answer = tester.nearest(0, 7);
-        int x = 0;
-    }
-
 }
