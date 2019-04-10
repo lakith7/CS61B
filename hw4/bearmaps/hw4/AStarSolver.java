@@ -14,7 +14,7 @@ public class AStarSolver <Vertex> implements ShortestPathsSolver<Vertex> {
     /* Holds the graph that is inputted. */
     private AStarGraph<Vertex> graph;
 
-    /* This priority queue contains two items, a priority value(distance to start + heuristic) and the item(WeightedVertex). */
+    /* This priority queue contains two items, a priority value(distance to start + heuristic) and the item(Vertex). */
     private DoubleMapPQ<Vertex> holder = new DoubleMapPQ<>();
 
     /* Stores the best distance to a vertex */
@@ -52,13 +52,9 @@ public class AStarSolver <Vertex> implements ShortestPathsSolver<Vertex> {
         numStatesExplored = 0;
         graph = input;
         endVertex = end;
-        List<WeightedEdge<Vertex>> startWeightedVertexes = input.neighbors(start);
-        for (WeightedEdge<Vertex> each: startWeightedVertexes) {
-            holder.add(each.to(), each.weight());
-            weight.put(each.to(), each.weight());
-            distTo.put(each.to(), each.weight());
-            edgeTo.put(each.to(), each.from());
-        }
+        distTo.put(start, 0.0);
+        holder.add(start, 1.0);
+        weight.put(start, 0.0);
 
         while (true) {
             if (holder.size() == 0) {
@@ -71,7 +67,7 @@ public class AStarSolver <Vertex> implements ShortestPathsSolver<Vertex> {
                 resulting = 1;
                 break;
             }
-            if (startVertex == end) {
+            if (startVertex.equals(end)) {
                 resulting = 0;
                 break;
             }
@@ -79,11 +75,15 @@ public class AStarSolver <Vertex> implements ShortestPathsSolver<Vertex> {
             relax(startVertex);
         }
 
+        /* For the case where the start and end vertex are the same vertex. */
+        if (resulting == 0 && start == end) {
+            answer.add(start);
+        }
         /* Computes a list of vertices from start to end as well as creates the solution weight. Consider reversing the list of vertices. */
-        if (resulting == 0) {
+        else if (resulting == 0) {
             Vertex path = edgeTo.get(end);
             answer.add(end);
-            while (path != start) {
+            while (!path.equals(start)) {
                 answer.add(path);
                 path = edgeTo.get(path);
             }
@@ -112,11 +112,7 @@ public class AStarSolver <Vertex> implements ShortestPathsSolver<Vertex> {
                 distTo.put(q, (distTo.get(p) + w));
                 weight.put(q, (distTo.get(p) + w));
                 edgeTo.put(q, p);
-                if (holder.contains(q)) {
-                    holder.changePriority(q, distTo.get(q) + graph.estimatedDistanceToGoal(q, endVertex));
-                } else {
-                    holder.add(q, distTo.get(q) + graph.estimatedDistanceToGoal(q, endVertex));
-                }
+                holder.add(q, distTo.get(q) + graph.estimatedDistanceToGoal(q, endVertex));
             } else if ((distTo.get(p) + w) < distTo.get(q)) {
                 distTo.put(q, (distTo.get(p) + w));
                 weight.put(q, (distTo.get(p) + w));
