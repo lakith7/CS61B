@@ -6,7 +6,7 @@ import java.util.HashMap;
 import edu.princeton.cs.algs4.Stopwatch;
 import java.util.ArrayList;
 
-public class AStarSolver <Vertex> implements ShortestPathsSolver<Vertex> {
+public class AStarSolver<Vertex> implements ShortestPathsSolver<Vertex> {
 
     /* Holds the goal vertex. */
     private Vertex endVertex;
@@ -14,17 +14,21 @@ public class AStarSolver <Vertex> implements ShortestPathsSolver<Vertex> {
     /* Holds the graph that is inputted. */
     private AStarGraph<Vertex> graph;
 
-    /* This priority queue contains two items, a priority value(distance to start + heuristic) and the item(Vertex). */
+    /* This priority queue contains two items,
+    a priority value(distance to start + heuristic) and the item(Vertex). */
     private DoubleMapPQ<Vertex> holder = new DoubleMapPQ<>();
 
     /* Stores the best distance to a vertex */
     private HashMap<Vertex, Double> distTo = new HashMap<>();
 
-    /* Stores the vertex that a vertex is connected to that provides the shortest distance to the start vertex.
-    * The key vertex is the vertex and the value vertex is the vertex that the key comes from. */
-    private HashMap <Vertex, Vertex> edgeTo = new HashMap<>();
+    /* Stores the vertex that a vertex is connected to that
+    provides the shortest distance to the start vertex.
+    * The key vertex is the vertex and the value vertex is the
+    * vertex that the key comes from. */
+    private HashMap<Vertex, Vertex> edgeTo = new HashMap<>();
 
-    /* Stores the weight of the solution. Compute this after running the main part of the constructor. */
+    /* Stores the weight of the solution. Compute this after running the
+    main part of the constructor. */
     private double solutionWeight;
 
     /* Total number of priority queue dequeue operations. */
@@ -44,8 +48,10 @@ public class AStarSolver <Vertex> implements ShortestPathsSolver<Vertex> {
 
     /* Constructor */
     /* Timeout passed in has unit of seconds. */
-    /* Constructor computes everything to the point that each method runs in constant time. */
-    /* The constructor finds the shortest weighted path from a start vertex to an end vertex. */
+    /* Constructor computes everything to the point
+    that each method runs in constant time. */
+    /* The constructor finds the shortest weighted path
+    from a start vertex to an end vertex. */
     public AStarSolver(AStarGraph<Vertex> input, Vertex start, Vertex end, double timeout) {
         Stopwatch timer = new Stopwatch();
         resulting = 0;
@@ -76,11 +82,11 @@ public class AStarSolver <Vertex> implements ShortestPathsSolver<Vertex> {
         }
 
         /* For the case where the start and end vertex are the same vertex. */
-        if (resulting == 0 && start == end) {
+        if (resulting == 0 && start.equals(end)) {
             answer.add(start);
-        }
-        /* Computes a list of vertices from start to end as well as creates the solution weight. Consider reversing the list of vertices. */
-        else if (resulting == 0) {
+        } else if (resulting == 0) {
+            /* Computes a list of vertices from start to end as well as creates the solution weight.
+            Consider reversing the list of vertices. */
             Vertex path = edgeTo.get(end);
             answer.add(end);
             while (!path.equals(start)) {
@@ -99,7 +105,8 @@ public class AStarSolver <Vertex> implements ShortestPathsSolver<Vertex> {
         explorationTime = timer.elapsedTime();
     }
 
-    /* Given a vertex, this method relaxes all the edges. Relaxing involves changing the neighbors edgeTo and distTo (if applicable).
+    /* Given a vertex, this method relaxes all the edges.
+    Relaxing involves changing the neighbors edgeTo and distTo (if applicable).
      * It also includes adding each of it's neighbors to the priority queue. */
     private void relax(Vertex e) {
         List<WeightedEdge<Vertex>> startWeightedVertexes = graph.neighbors(e);
@@ -119,9 +126,11 @@ public class AStarSolver <Vertex> implements ShortestPathsSolver<Vertex> {
                 /* Add q to the hashmap with the edgeTo value of p. */
                 edgeTo.put(q, p);
                 if (holder.contains(q)) {
-                    holder.changePriority(q, distTo.get(q) + graph.estimatedDistanceToGoal(q, endVertex));
+                    holder.changePriority(q, distTo.get(q) +
+                            graph.estimatedDistanceToGoal(q, endVertex));
                 } else {
-                    holder.add(q, distTo.get(q) + graph.estimatedDistanceToGoal(q, endVertex));
+                    holder.add(q, distTo.get(q) +
+                            graph.estimatedDistanceToGoal(q, endVertex));
                 }
             }
         }
@@ -139,12 +148,12 @@ public class AStarSolver <Vertex> implements ShortestPathsSolver<Vertex> {
     }
 
     public List<Vertex> solution() {
-        ArrayList<Vertex> holder = new ArrayList<>();
+        ArrayList<Vertex> holder3 = new ArrayList<>();
         if (resulting == 1) {
-            return holder;
+            return holder3;
         }
         if (resulting == 2) {
-            return holder;
+            return holder3;
         }
         return answer;
     }
