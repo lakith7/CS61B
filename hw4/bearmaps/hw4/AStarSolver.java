@@ -43,7 +43,8 @@ public class AStarSolver<Vertex> implements ShortestPathsSolver<Vertex> {
     /* Holds the vertices that is the shortest path. */
     private ArrayList<Vertex> answer = new ArrayList<>();
 
-    /* Stores each vertex and their weight. This is used to compute to solutionWeight variable. Can I just use distTo? */
+    /* Stores each vertex and their weight. This is used to
+    compute to solutionWeight variable. Can I just use distTo? */
     private HashMap<Vertex, Double> weight = new HashMap<>();
 
     /* Constructor */
@@ -126,17 +127,18 @@ public class AStarSolver<Vertex> implements ShortestPathsSolver<Vertex> {
                 /* Add q to the hashmap with the edgeTo value of p. */
                 edgeTo.put(q, p);
                 if (holder.contains(q)) {
-                    holder.changePriority(q, distTo.get(q) +
-                            graph.estimatedDistanceToGoal(q, endVertex));
+                    holder.changePriority(q, distTo.get(q)
+                            + graph.estimatedDistanceToGoal(q, endVertex));
                 } else {
-                    holder.add(q, distTo.get(q) +
-                            graph.estimatedDistanceToGoal(q, endVertex));
+                    holder.add(q, distTo.get(q)
+                            + graph.estimatedDistanceToGoal(q, endVertex));
                 }
             }
         }
     }
 
-    /* If 0, return solved. If 1, return timeout. If 2, return unsolvable. The variable that is checked is resulting. */
+    /* If 0, return solved. If 1, return timeout. If 2, return unsolvable.
+    The variable that is checked is resulting. */
     public SolverOutcome outcome() {
         if (resulting == 0) {
             return SolverOutcome.SOLVED;
