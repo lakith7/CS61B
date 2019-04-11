@@ -34,7 +34,7 @@ public class MergeSort {
     /**
      * Returns a queue of queues that each contain one item from items.
      *
-     * This method should take linear time and will result in "items" being empty
+     * This method should take linear time.
      *
      * @param   items  A Queue of items.
      * @return         A Queue of queues, each containing an item from items.
@@ -42,8 +42,13 @@ public class MergeSort {
      */
     private static <Item extends Comparable> Queue<Queue<Item>>
             makeSingleItemQueues(Queue<Item> items) {
-        // Your code here!
-        return null;
+        Queue<Queue<Item>> holder = new Queue<>();
+        while (!items.isEmpty()) {
+            Queue<Item> insertion = new Queue<>();
+            insertion.enqueue(items.dequeue());
+            holder.enqueue(insertion);
+        }
+        return holder;
     }
 
     /**
@@ -61,15 +66,21 @@ public class MergeSort {
      */
     private static <Item extends Comparable> Queue<Item> mergeSortedQueues(
             Queue<Item> q1, Queue<Item> q2) {
-        // Your code here!
-        return null;
+        Queue<Item> combined = new Queue<>();
+        while (true) {
+            if (q1.isEmpty() && q2.isEmpty()) {
+                break;
+            }
+            combined.enqueue(getMin(q1, q2));
+        }
+        return combined;
     }
 
     /**
      * Returns a Queue that contains the given items sorted from least to greatest.
      *
      * This method should take roughly nlogn time where n is the size of "items"
-     * running this method will result in "items" being emptied into the returned queue
+     * this method should be non-destructive and not empty "items".
      *
      * @param   items  A Queue to be sorted.
      * @return         A Queue containing every item in "items".
@@ -77,7 +88,11 @@ public class MergeSort {
      */
     public static <Item extends Comparable> Queue<Item> mergeSort(
             Queue<Item> items) {
-        // Your code here!
+        Queue<Queue<Item>> qofQs = makeSingleItemQueues(items);
+        items = qofQs.dequeue();
+        while (!qofQs.isEmpty()) {
+            items = mergeSortedQueues(items, qofQs.dequeue());
+        }
         return items;
     }
 }

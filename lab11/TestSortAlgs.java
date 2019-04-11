@@ -1,8 +1,12 @@
 import edu.princeton.cs.algs4.Queue;
 
 import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+
 
 public class TestSortAlgs {
+
+    /* Enqueue is addLast and Dequeue is removeFirst */
 
     @Test
     public void testQuickSort() {
@@ -11,7 +15,14 @@ public class TestSortAlgs {
 
     @Test
     public void testMergeSort() {
-
+        Queue<String> tester = new Queue<>();
+        tester.enqueue("Joe");
+        tester.enqueue("Omar");
+        tester.enqueue("Itai");
+        tester = MergeSort.mergeSort(tester);
+        assertEquals(tester.dequeue(), "Itai");
+        assertEquals(tester.dequeue(), "Joe");
+        assertEquals(tester.dequeue(), "Omar");
     }
 
     /**
