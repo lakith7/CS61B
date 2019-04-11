@@ -19,10 +19,12 @@ public class TestSortAlgs {
         tester.enqueue("Joe");
         tester.enqueue("Omar");
         tester.enqueue("Itai");
-        tester = MergeSort.mergeSort(tester);
-        assertEquals(tester.dequeue(), "Itai");
-        assertEquals(tester.dequeue(), "Joe");
-        assertEquals(tester.dequeue(), "Omar");
+        Queue<String> tester1 = MergeSort.mergeSort(tester);
+        assertEquals(tester1.dequeue(), "Itai");
+        assertEquals(tester1.dequeue(), "Joe");
+        assertEquals(tester1.dequeue(), "Omar");
+        tester.dequeue();
+        tester.dequeue();
     }
 
     /**
