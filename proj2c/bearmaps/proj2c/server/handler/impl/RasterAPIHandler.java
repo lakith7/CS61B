@@ -16,9 +16,9 @@ import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ArrayList;
 
-import static bearmaps.proj2c.utils.Constants.SEMANTIC_STREET_GRAPH;
-import static bearmaps.proj2c.utils.Constants.ROUTE_LIST;
+import static bearmaps.proj2c.utils.Constants.*;
 
 /**
  * Handles requests from the web browser for map images. These images
@@ -84,12 +84,157 @@ public class RasterAPIHandler extends APIRouteHandler<Map<String, Double>, Map<S
      */
     @Override
     public Map<String, Object> processRequest(Map<String, Double> requestParams, Response response) {
-        //System.out.println("yo, wanna know the parameters given by the web browser? They are:");
-        //System.out.println(requestParams);
+        /* Start by retrieving all the data given. */
+        double lrlon = requestParams.get("lrlon");
+        double lrlat = requestParams.get("lrlat");
+        double ullon = requestParams.get("ullon");
+        double ullat = requestParams.get("ullat");
+        double width = requestParams.get("w");
+        double height = requestParams.get("h");
+
+        double actualLonDPP = (lrlon - ullon)/width;
+
+        /* Change to false if the query is unsuccessful. */
+        boolean query_success = true;
+
+        /* If it is not possible to find images to cover the whole query box, just
+        return the data that is available. */
+
+        /* If the user provides a query box that is completely outside of the root long/lat or
+         * the data doesn't make sense (ullon, ullat is to the right of lrlon, lrlat) then set
+         * query_success to false. */
+
+
+
+        /* Finds the appropriate level of depth. Breaks if depth goes above 7. */
+
+        double estimatedRootLRLon = ROOT_LRLON;
+        double estimatedRootULLon = ROOT_ULLON;
+        double estimatedLonDPP = (estimatedRootLRLon - estimatedRootULLon)/256;
+        int depth = 0;
+
+        while (estimatedLonDPP > actualLonDPP) {
+            estimatedRootLRLon = estimatedRootLRLon + (estimatedRootULLon - estimatedRootLRLon)/2;
+            estimatedLonDPP = (estimatedRootLRLon - estimatedRootULLon)/256;
+            depth += 1;
+            if (depth == 7) {
+                break;
+            }
+        }
+
+
+        /* Find the position of the image files to return. Pos. 0,0, 0,1 , etc.
+         * Position 0, 0 returns the image in the top left. 0 is the first column and
+         * the first row. 1 is the second column and the second row. */
+
+        double numberOfBoxesLong = Math.pow(2, depth);
+        double totalLength = ROOT_ULLAT - ROOT_LRLAT;
+        double totalHeight = ROOT_LRLON - ROOT_ULLON;
+        double lengthPerSquare = totalLength/numberOfBoxesLong;
+        double heightPerSquare = totalHeight/numberOfBoxesLong;
+
+        ArrayList<Integer> xValues = new ArrayList<>();
+        ArrayList<Integer> yValues = new ArrayList<>();
+
+        double startULLat = ROOT_ULLAT;
+        int startX = 0;
+
+        /* Finding startX. This works. */
+        while (true) {
+            if ((startULLat >= ullat) && ((startULLat - lengthPerSquare) <= ullat)) {
+                break;
+            }
+            startX += 1;
+            startULLat -= lengthPerSquare;
+        }
+
+        double raster_ul_lat = startULLat;
+        int endX = startX;
+        double endULLat = startULLat;
+
+        /* Finding endX. */
+        while (true) {
+            if ((endULLat >= lrlat) && ((endULLat - lengthPerSquare) <= lrlat)) {
+                break;
+            }
+            endX += 1;
+            endULLat -= lengthPerSquare;
+        }
+        endX += 1;
+
+        double raster_lr_lat = endULLat - lengthPerSquare;
+
+        double startULLon = ROOT_ULLON;
+        int startY = 0;
+
+        /* Finding startY. */
+        while (true) {
+            if ((startULLon <=  ullon) && ((startULLon + heightPerSquare) >= ullon)) {
+                break;
+            }
+            startY += 1;
+            startULLon += heightPerSquare;
+        }
+
+        double raster_ul_lon = startULLon;
+        int endY = startY;
+        double endULLon = startULLon;
+
+        /* Finding endY. */
+        while (true) {
+            if ((endULLon <= lrlon) && ((endULLon + heightPerSquare) >= lrlon)) {
+                break;
+            }
+            endY += 1;
+            endULLon += heightPerSquare;
+        }
+
+        endY += 1;
+        double raster_lr_lon = endULLon + heightPerSquare;
+
+        /* Inputting into the 2d render_grid. i is used for the x variable,
+        j for the y variable. Missing one row. Above is correct.
+        Just add the exceptions and fix this part. */
+        String[][] render_grid = new String[endY - startY][endX - startX];
+        int i = 0;
+        int j = 0;
+        while (i < (endY - startY)) {
+            while (j < (endX - startX)) {
+                render_grid[i][j] = "d" + depth + "_x" + (startY + j) + "_y" + (startX + i) + ".png";
+                j += 1;
+            }
+            i += 1;
+            j = 0;
+        }
+
+        /* Inputting the information into the HashMap that is returned. */
+
         Map<String, Object> results = new HashMap<>();
-        System.out.println("Since you haven't implemented RasterAPIHandler.processRequest, nothing is displayed in "
-                + "your browser.");
+        results.put("depth", depth);
+        results.put("query_success", query_success);
+        results.put("render_grid", render_grid);
+        results.put("raster_ul_lon", raster_ul_lon);
+        results.put("raster_lr_lon", raster_lr_lon);
+        results.put("raster_ul_lat", raster_ul_lat);
+        results.put("raster_lr_lat", raster_lr_lat);
+
         return results;
+    }
+
+    public double testDepth() {
+        double actualLonDPP = 0.00008630532;
+        double estimatedRootLRLon = ROOT_LRLON;
+        double estimatedRootULLon = ROOT_ULLON;
+        double estimatedLonDPP = (estimatedRootLRLon - estimatedRootULLon)/256;
+        double depth = 0;
+
+        while (estimatedLonDPP > actualLonDPP) {
+            estimatedRootLRLon = estimatedRootLRLon + (estimatedRootULLon - estimatedRootLRLon)/2;
+            estimatedLonDPP = (estimatedRootLRLon - estimatedRootULLon)/256;
+            depth += 1;
+        }
+
+        return depth;
     }
 
     @Override
@@ -143,7 +288,7 @@ public class RasterAPIHandler extends APIRouteHandler<Map<String, Double>, Map<S
      * In Spring 2016, students had to do this on their own, but in 2017,
      * we made this into provided code since it was just a bit too low level.
      */
-    private  void writeImagesToOutputStream(Map<String, Object> rasteredImageParams,
+    private void writeImagesToOutputStream(Map<String, Object> rasteredImageParams,
                                                   ByteArrayOutputStream os) {
         String[][] renderGrid = (String[][]) rasteredImageParams.get("render_grid");
         int numVertTiles = renderGrid.length;
@@ -212,5 +357,20 @@ public class RasterAPIHandler extends APIRouteHandler<Map<String, Double>, Map<S
             }
         }
         return tileImg;
+    }
+
+    public static void main(String args[]) {
+        double actualLonDPP = 0.00008630532;
+        double estimatedRootLRLon = ROOT_LRLON;
+        double estimatedRootULLon = ROOT_ULLON;
+        double estimatedLonDPP = (estimatedRootLRLon - estimatedRootULLon)/256;
+        int depth = 0;
+
+        while (estimatedLonDPP > actualLonDPP) {
+            estimatedRootLRLon = estimatedRootLRLon + (estimatedRootULLon - estimatedRootLRLon)/2;
+            estimatedLonDPP = (estimatedRootLRLon - estimatedRootULLon)/256;
+            depth += 1;
+        }
+        System.out.println(depth);
     }
 }
