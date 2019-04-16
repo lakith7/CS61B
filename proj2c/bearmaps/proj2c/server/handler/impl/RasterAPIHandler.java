@@ -195,11 +195,13 @@ public class RasterAPIHandler extends APIRouteHandler<Map<String, Double>, Map<S
         /* Inputting into the 2d render_grid. i is used for the x variable,
         j for the y variable. Missing one row. Above is correct.
         Just add the exceptions and fix this part. */
-        String[][] render_grid = new String[endY - startY][endX - startX];
+        double numberXBoxes = (raster_ul_lat - raster_lr_lat)/lengthPerSquare;
+        double numberYBoxes = (raster_lr_lon - raster_ul_lon)/heightPerSquare;
+        String[][] render_grid = new String[endX - startX][endY - startY];
         int i = 0;
         int j = 0;
-        while (i < (endY - startY)) {
-            while (j < (endX - startX)) {
+        while (i < (endX - startX)) {
+            while (j < (endY - startY)) {
                 render_grid[i][j] = "d" + depth + "_x" + (startY + j) + "_y" + (startX + i) + ".png";
                 j += 1;
             }
@@ -360,17 +362,16 @@ public class RasterAPIHandler extends APIRouteHandler<Map<String, Double>, Map<S
     }
 
     public static void main(String args[]) {
-        double actualLonDPP = 0.00008630532;
-        double estimatedRootLRLon = ROOT_LRLON;
-        double estimatedRootULLon = ROOT_ULLON;
-        double estimatedLonDPP = (estimatedRootLRLon - estimatedRootULLon)/256;
-        int depth = 0;
-
-        while (estimatedLonDPP > actualLonDPP) {
-            estimatedRootLRLon = estimatedRootLRLon + (estimatedRootULLon - estimatedRootLRLon)/2;
-            estimatedLonDPP = (estimatedRootLRLon - estimatedRootULLon)/256;
-            depth += 1;
-        }
-        System.out.println(depth);
+        HashMap<String, Double> holder = new HashMap<>();
+        holder.put("h", 894.0);
+        holder.put("lrlat", 37.856014984);
+        holder.put("lrlon", -122.275684767);
+        holder.put("ullat", 37.883626573);
+        holder.put("ullon", -122.292887961);
+        holder.put("w", 557.0);
+        RasterAPIHandler object = new RasterAPIHandler();
+        Map<String, Object> answer = object.processRequest(holder, null);
+        int x = 0;
+        /* render_grid=[[d4_x1_y1.png, d4_x2_y1.png, d4_x3_y1.png, d4_x4_y1.png], [d4_x1_y2.png, d4_x2_y2.png, d4_x3_y2.png, d4_x4_y2.png], [d4_x1_y3.png, d4_x2_y3.png, d4_x3_y3.png, d4_x4_y3.png], [d4_x1_y4.png, d4_x2_y4.png, d4_x3_y4.png, d4_x4_y4.png], [d4_x1_y5.png, d4_x2_y5.png, d4_x3_y5.png, d4_x4_y5.png], [d4_x1_y6.png, d4_x2_y6.png, d4_x3_y6.png, d4_x4_y6.png], [d4_x1_y7.png, d4_x2_y7.png, d4_x3_y7.png, d4_x4_y7.png], [d4_x1_y8.png, d4_x2_y8.png, d4_x3_y8.png, d4_x4_y8.png]] */
     }
 }
