@@ -54,7 +54,7 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
             holder.put("lat", eachNode.lat());
             holder.put("lon", eachNode.lon());
             holder.put("name", eachNode.name());
-            holder.put("ID", eachNode.id());
+            holder.put("id", eachNode.id());
             locationInfo.put(eachNode.name(), holder);
             double size = this.neighbors(eachNode.id()).size();
             if (size > 0) {
