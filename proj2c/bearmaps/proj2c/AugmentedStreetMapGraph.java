@@ -109,6 +109,10 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
                 locations.add(eachOutput);
             }
         }
+        output = nameMap.get(cleanedString);
+        for (String eachOutput: output) {
+            locations.add(eachOutput);
+        }
         return locations;
     }
 
