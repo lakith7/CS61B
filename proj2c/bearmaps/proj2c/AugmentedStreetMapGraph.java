@@ -110,8 +110,10 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
             }
         }
         output = nameMap.get(cleanedString);
-        for (String eachOutput: output) {
-            locations.add(eachOutput);
+        if (output != null) {
+            for (String eachOutput : output) {
+                locations.add(eachOutput);
+            }
         }
         return locations;
     }
