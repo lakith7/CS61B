@@ -44,6 +44,7 @@ public class SearchAPIHandler extends APIRouteHandler<Tuple<Set<String>, String>
      * @return A <code>List</code> of the full names of locations whose cleaned name matches the
      * cleaned <code>prefix</code>.
      */
+
     public List<String> getLocationsByPrefix(String prefix) {
 
         return SEMANTIC_STREET_GRAPH.getLocationsByPrefix(prefix);

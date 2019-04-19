@@ -4,7 +4,7 @@ import bearmaps.hw4.streetmap.Node;
 import bearmaps.hw4.streetmap.StreetMapGraph;
 import bearmaps.proj2ab.Point;
 import bearmaps.proj2ab.WeirdPointSet;
-import bearmaps.lab9.MyTrieSet;
+import edu.princeton.cs.algs4.TrieSET;
 
 import java.util.*;
 
@@ -23,7 +23,7 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
 
     private WeirdPointSet graph;
 
-    private MyTrieSet nameBank = new MyTrieSet();
+    private TrieSET nameBank = new TrieSET();
 
     private HashMap<String, String> nameMap = new HashMap<>();
 
@@ -71,16 +71,17 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
      * @return A <code>List</code> of the full names of locations whose cleaned name matches the
      * cleaned <code>prefix</code>.
      */
+
     public List<String> getLocationsByPrefix(String prefix) {
-        List<String> cleanedLocations = new ArrayList<>();
         ArrayList<String> locations = new ArrayList<>();
         String cleanedString = cleanString(prefix);
-        cleanedLocations = nameBank.keysWithPrefix(cleanedString);
+        Iterable<String> cleanedLocations = nameBank.keysWithPrefix(cleanedString);
         for (String eachLocation: cleanedLocations) {
             locations.add(nameMap.get(eachLocation));
         }
         return locations;
     }
+
 
     /**
      * For Project Part III (gold points)
@@ -108,6 +109,17 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
      */
     private static String cleanString(String s) {
         return s.replaceAll("[^a-zA-Z ]", "").toLowerCase();
+    }
+
+    public static void main(String args[]) {
+        String x = cleanString("Hello there homie!");
+        System.out.println(x);
+        TrieSET holder = new TrieSET();
+        holder.add("hello");
+        holder.add("heathen");
+        holder.add("her");
+        Iterable<String> actual = holder.keysWithPrefix("he");
+        System.out.println(actual);
     }
 
 }
