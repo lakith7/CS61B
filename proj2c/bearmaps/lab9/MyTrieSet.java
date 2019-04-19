@@ -3,6 +3,7 @@ package bearmaps.lab9;
 import java.util.List;
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.Set;
 
 public class MyTrieSet implements TrieSet61B {
 
@@ -69,21 +70,38 @@ public class MyTrieSet implements TrieSet61B {
     }
 
     public List<String> keysWithPrefix(String prefix) {
-        List<String> holder = new ArrayList<String>();
         Node start = root;
-        /* Finds the node associated with the last char of the string. If the string isn't in the trie, it returns an
-         * empty list */
-        for (int i = 0, n = prefix.length(); i < n; i++) {
-            char c = prefix.charAt(i);
-            if (!start.map.containsKey(c)) {
-                return holder;
-            }
-            start = start.map.get(c);
+        int i = 0;
+        while (i < prefix.length()) {
+            char next = prefix.charAt(i);
+            start = start.map.get(next);
+            i += 1;
         }
-        for (int y = 0; y < start.map.size(); y++) {
+        ArrayList<String> listOfWords = new ArrayList<>();
+        Set<Character> setOfKeys = start.map.keySet();
+        for (char eachChar : setOfKeys) {
+            helper(start.map.get(eachChar), listOfWords, prefix + eachChar);
+        }
+        return listOfWords;
+    }
 
+    private void helper(Node currentNode, ArrayList<String> holder, String start) {
+        if (currentNode.isKey) {
+            holder.add(start);
+            if (holder.isEmpty()) {
+                int x;
+            }
         }
-        return holder;
+        Set<Character> setOfNewKeys = currentNode.map.keySet();
+        for (char eachChar : setOfNewKeys) {
+            Node nextNode = currentNode.map.get(eachChar);
+            String nextWord = start + eachChar;
+            faster(nextNode, holder, nextWord);
+        }
+    }
+
+    private void faster(Node currentNode, ArrayList<String> holder, String start) {
+        helper(currentNode, holder, start);
     }
 
 

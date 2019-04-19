@@ -4,7 +4,7 @@ import bearmaps.hw4.streetmap.Node;
 import bearmaps.hw4.streetmap.StreetMapGraph;
 import bearmaps.proj2ab.Point;
 import bearmaps.proj2ab.WeirdPointSet;
-import edu.princeton.cs.algs4.TrieSET;
+import bearmaps.lab9.MyTrieSet;
 
 import java.util.*;
 
@@ -23,7 +23,7 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
 
     private WeirdPointSet graph;
 
-    private TrieSET nameBank = new TrieSET();
+    private MyTrieSet nameBank = new MyTrieSet();
 
     private HashMap<String, ArrayList<String>> nameMap = new HashMap<>();
 
@@ -65,7 +65,6 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
                 lister.add(holder);
                 locationInfo.put(eachNode.name(), lister);
             }
-
             double size = this.neighbors(eachNode.id()).size();
             if (size > 0) {
                 Point addition = new Point(eachNode.lon(), eachNode.lat());
@@ -102,7 +101,7 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
     public List<String> getLocationsByPrefix(String prefix) {
         ArrayList<String> locations = new ArrayList<>();
         String cleanedString = cleanString(prefix);
-        Iterable<String> cleanedLocations = nameBank.keysWithPrefix(cleanedString);
+        List<String> cleanedLocations = nameBank.keysWithPrefix(cleanedString);
         ArrayList<String> output = new ArrayList<>();
         for (String eachLocation: cleanedLocations) {
             output = nameMap.get(eachLocation);
@@ -137,7 +136,8 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
                 solution.add(eachItem);
             }
         }
-        return solution;
+        /* return solution; */
+        return new LinkedList<Map<String, Object>>();
     }
 
 
@@ -154,7 +154,7 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
     public static void main(String args[]) {
         String x = cleanString("Hello there homie!");
         System.out.println(x);
-        TrieSET holder = new TrieSET();
+        MyTrieSet holder = new MyTrieSet();
         holder.add("hello");
         holder.add("heathen");
         holder.add("her");
