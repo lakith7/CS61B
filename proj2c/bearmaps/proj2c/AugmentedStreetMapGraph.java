@@ -27,6 +27,10 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
 
     private HashMap<String, ArrayList<String>> nameMap = new HashMap<>();
 
+    private ArrayList<Map<String, Object>> locationHolder = new ArrayList<>();
+
+    HashMap<String, HashMap<String, Object>> locationInfo = new HashMap<>();
+
     public AugmentedStreetMapGraph(String dbPath) {
         super(dbPath);
         List<Node> nodes = this.getNodes();
@@ -46,6 +50,12 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
                     nameMap.put(cleanName, newInput);
                 }
             }
+            HashMap<String, Object> holder = new HashMap<>();
+            holder.put("lat", eachNode.lat());
+            holder.put("lon", eachNode.lon());
+            holder.put("name", eachNode.name());
+            holder.put("ID", eachNode.id());
+            locationInfo.put(eachNode.name(), holder);
             double size = this.neighbors(eachNode.id()).size();
             if (size > 0) {
                 Point addition = new Point(eachNode.lon(), eachNode.lat());
@@ -108,7 +118,13 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
      * "id" -> Number, The id of the node. <br>
      */
     public List<Map<String, Object>> getLocations(String locationName) {
-        return new LinkedList<>();
+        String cleanInput = cleanString(locationName);
+        List<String> output = nameMap.get(cleanInput);
+        List<Map<String, Object>> solution = new ArrayList<>();
+        for (String eachWord: output) {
+            solution.add(locationInfo.get(eachWord));
+        }
+        return solution;
     }
 
 
