@@ -4,6 +4,7 @@ import bearmaps.hw4.streetmap.Node;
 import bearmaps.hw4.streetmap.StreetMapGraph;
 import bearmaps.proj2ab.Point;
 import bearmaps.proj2ab.WeirdPointSet;
+import bearmaps.lab9.MyTrieSet;
 
 import java.util.*;
 
@@ -22,10 +23,22 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
 
     private WeirdPointSet graph;
 
+    private MyTrieSet nameBank = new MyTrieSet();
+
+    private HashMap<String, String> nameMap = new HashMap<>();
+
     public AugmentedStreetMapGraph(String dbPath) {
         super(dbPath);
         List<Node> nodes = this.getNodes();
         for (Node eachNode: nodes) {
+            if (eachNode.name() != null) {
+                String actualName = eachNode.name();
+                String cleanName = cleanString(actualName);
+                if (!nameMap.containsKey(cleanName)) {
+                    nameBank.add(cleanName);
+                    nameMap.put(cleanName, actualName);
+                }
+            }
             double size = this.neighbors(eachNode.id()).size();
             if (size > 0) {
                 Point addition = new Point(eachNode.lon(), eachNode.lat());
@@ -59,7 +72,14 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
      * cleaned <code>prefix</code>.
      */
     public List<String> getLocationsByPrefix(String prefix) {
-        return new LinkedList<>();
+        List<String> cleanedLocations = new ArrayList<>();
+        ArrayList<String> locations = new ArrayList<>();
+        String cleanedString = cleanString(prefix);
+        cleanedLocations = nameBank.keysWithPrefix(cleanedString);
+        for (String eachLocation: cleanedLocations) {
+            locations.add(nameMap.get(eachLocation));
+        }
+        return locations;
     }
 
     /**
