@@ -142,8 +142,7 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
                 solution.add(eachItem);
             }
         }
-        /* return solution; */
-        return new LinkedList<Map<String, Object>>();
+        return solution;
     }
 
 
