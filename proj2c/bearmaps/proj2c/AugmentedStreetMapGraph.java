@@ -25,7 +25,7 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
 
     private TrieSET nameBank = new TrieSET();
 
-    private HashMap<String, String> nameMap = new HashMap<>();
+    private HashMap<String, ArrayList<String>> nameMap = new HashMap<>();
 
     public AugmentedStreetMapGraph(String dbPath) {
         super(dbPath);
@@ -36,7 +36,14 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
                 String cleanName = cleanString(actualName);
                 if (!nameMap.containsKey(cleanName)) {
                     nameBank.add(cleanName);
-                    nameMap.put(cleanName, actualName);
+                    ArrayList<String> input = new ArrayList<>();
+                    input.add(actualName);
+                    nameMap.put(cleanName, input);
+                } else if (nameMap.containsKey(cleanName)) {
+                    ArrayList<String> newInput = new ArrayList<>();
+                    newInput = nameMap.get(cleanName);
+                    newInput.add(actualName);
+                    nameMap.put(cleanName, newInput);
                 }
             }
             double size = this.neighbors(eachNode.id()).size();
@@ -76,8 +83,12 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
         ArrayList<String> locations = new ArrayList<>();
         String cleanedString = cleanString(prefix);
         Iterable<String> cleanedLocations = nameBank.keysWithPrefix(cleanedString);
+        ArrayList<String> output = new ArrayList<>();
         for (String eachLocation: cleanedLocations) {
-            locations.add(nameMap.get(eachLocation));
+            output = nameMap.get(eachLocation);
+            for (String eachOutput: output) {
+                locations.add(eachOutput);
+            }
         }
         return locations;
     }
