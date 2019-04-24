@@ -47,16 +47,40 @@ public class Engine {
         //
         // See proj3.byow.InputDemo for a demo of how you can make a nice clean interface
         // that works for many different input types.
-        int holder = 0;
+        String holder = "";
+        int seed;
         if (input.charAt(0) == 'n' || input.charAt(0) == 'N') {
-            for (int i = 1; (input.charAt(i) != 's' && input.charAt(i) != 'S'); i++) {
-                holder = input.charAt(i) + (holder * 10);
+            for (int i = 1; i < input.length(); i++) {
+                if (input.charAt(i) == 's') {
+                    break;
+                }
+                if (input.charAt(i) == 'S') {
+                    break;
+                }
+                holder += input.charAt(i);
             }
         }
+        seed = Integer.parseInt(holder);
         Infrastructure input1 = new Infrastructure();
         RandomWorldGenerator firstTry = new RandomWorldGenerator();
-        TETile[][] actualInput = firstTry.worldMaker(WIDTH, HEIGHT, holder);
+        TETile[][] actualInput = firstTry.worldMaker(WIDTH, HEIGHT, seed);
         actualInput = input1.fillNothing(actualInput, WIDTH, HEIGHT);
         return actualInput;
+    }
+
+    public static void main(String[] args) {
+        String input = "n1009835137506199904s";
+        String holder = "";
+        if (input.charAt(0) == 'n' || input.charAt(0) == 'N') {
+            for (int i = 1; i < input.length(); i++) {
+                if (input.charAt(i) == 's') {
+                    break;
+                }
+                if (input.charAt(i) == 'S') {
+                    break;
+                }
+                holder += input.charAt(i);
+            }
+        }
     }
 }
