@@ -2,9 +2,9 @@ package byow.TileEngine;
 
 public class RoomInfoHolder {
 
-    public TETile[][] grid;
+    private TETile[][] grid;
 
-    public int usedSpaces;
+    private int usedSpaces;
 
     public RoomInfoHolder(TETile[][] graph, int ratio) {
         grid = graph;

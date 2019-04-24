@@ -1,6 +1,5 @@
 package byow.TileEngine;
 
-import byow.TileEngine.Infrastructure;
 import java.util.Random;
 import byow.Core.RandomUtils;
 
@@ -29,7 +28,8 @@ public class RandomWorldGenerator {
             newRoom[2] = ybcoordinate;
             newRoom[3] = ytcoordinate;
             newRoom[4] = 5;
-            allInfo = createRandRoom(xlcoordinate, xrcoordinate, ytcoordinate, ybcoordinate, output, usedSpaces);
+            allInfo = createRandRoom(xlcoordinate, xrcoordinate, ytcoordinate,
+                    ybcoordinate, output, usedSpaces);
             usedSpaces = allInfo.getUsedSpaces();
             if (prevRoom[4] == 5 && (newRoom != prevRoom)) {
                 allInfo = randConnectRoom(newRoom, prevRoom, output, allInfo.getUsedSpaces(), seed);
@@ -47,23 +47,28 @@ public class RandomWorldGenerator {
     }
 
     /* int[] = xlcoordinate, xrcoordinate, ybcoordinate, ytcoordinate. */
-    public RoomInfoHolder randConnectRoom (int[] firstRoom, int[] secondRoom, TETile[][] output, int usedSpaces, int seed) {
-        int[] Point1 = randPointOnRoom(firstRoom, seed);
-        int[] Point2 = randPointOnRoom(secondRoom, seed + 1);
+    public RoomInfoHolder randConnectRoom (int[] firstRoom, int[] secondRoom,
+                                           TETile[][] output, int usedSpaces, int seed) {
+        int[] point1 = randPointOnRoom(firstRoom, seed);
+        int[] point2 = randPointOnRoom(secondRoom, seed + 1);
         Infrastructure holder = new Infrastructure();
         RoomInfoHolder newHolder;
-        newHolder = holder.createHallway(Point1[0], Point1[1], Point2[0], Point2[1], output, usedSpaces);
-        if ((Point1[0] != 0) && (output[Point1[0] + 1][Point1[1]] == Tileset.FLOOR) && (output[Point1[0] - 1][Point1[1]] == Tileset.FLOOR)) {
-            output[Point1[0]][Point1[1]] = Tileset.FLOOR;
+        newHolder = holder.createHallway(point1[0], point1[1], point2[0], point2[1], output, usedSpaces);
+        if ((point1[0] != 0) && (output[point1[0] + 1][point1[1]] == Tileset.FLOOR)
+                && (output[point1[0] - 1][point1[1]] == Tileset.FLOOR)) {
+            output[point1[0]][point1[1]] = Tileset.FLOOR;
         }
-        if ((Point2[0] != 0) && (output[Point2[0] + 1][Point2[1]] == Tileset.FLOOR) && (output[Point2[0] - 1][Point2[1]] == Tileset.FLOOR)) {
-            output[Point2[0]][Point2[1]] = Tileset.FLOOR;
+        if ((point2[0] != 0) && (output[point2[0] + 1][point2[1]] == Tileset.FLOOR)
+                && (output[point2[0] - 1][point2[1]] == Tileset.FLOOR)) {
+            output[point2[0]][point2[1]] = Tileset.FLOOR;
         }
-        if ((Point1[1] != 0) && (output[Point1[0]][Point1[1] + 1] == Tileset.FLOOR) && (output[Point1[0]][Point1[1] - 1] == Tileset.FLOOR)) {
-            output[Point1[0]][Point1[1]] = Tileset.FLOOR;
+        if ((point1[1] != 0) && (output[point1[0]][point1[1] + 1] == Tileset.FLOOR)
+                && (output[point1[0]][point1[1] - 1] == Tileset.FLOOR)) {
+            output[point1[0]][point1[1]] = Tileset.FLOOR;
         }
-        if ((Point2[1] != 0) && (output[Point2[0]][Point2[1] + 1] == Tileset.FLOOR) && (output[Point2[0]][Point2[1] - 1] == Tileset.FLOOR)) {
-            output[Point2[0]][Point2[1]] = Tileset.FLOOR;
+        if ((point2[1] != 0) && (output[point2[0]][point2[1] + 1] == Tileset.FLOOR)
+                && (output[point2[0]][point2[1] - 1] == Tileset.FLOOR)) {
+            output[point2[0]][point2[1]] = Tileset.FLOOR;
         }
         return newHolder;
     }

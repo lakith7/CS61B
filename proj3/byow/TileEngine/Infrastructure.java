@@ -86,7 +86,8 @@ public class Infrastructure {
     }
 
     public RoomInfoHolder createHallway(int startXPoint, int startYPoint,
-                                        int endXPoint, int endYPoint, TETile[][] output, int usedSpaces) {
+                                        int endXPoint, int endYPoint,
+                                        TETile[][] output, int usedSpaces) {
         RoomInfoHolder solution = new RoomInfoHolder(output, usedSpaces);
         Infrastructure instigator = new Infrastructure();
         if (startYPoint > endYPoint) {
@@ -96,14 +97,15 @@ public class Infrastructure {
                         startYPoint - 1, output, usedSpaces);
                 solution = instigator.roomGenerator(endXPoint - 1,
                         endXPoint + 1, startYPoint, endYPoint, output, usedSpaces);
-                solution = instigator.cornerGenerator(endXPoint, startYPoint,1 , usedSpaces, output);
+                solution =
+                        instigator.cornerGenerator(endXPoint, startYPoint, 1, usedSpaces, output);
             /* Situation 2 */
             } else if (endXPoint < startXPoint) {
                 solution = instigator.roomGenerator(endXPoint - 1, endXPoint + 1, startYPoint,
                         endYPoint, output, usedSpaces);
                 solution = instigator.roomGenerator(endXPoint, startXPoint, startYPoint + 1,
                         startYPoint - 1, output, usedSpaces);
-                solution = instigator.cornerGenerator(endXPoint, startYPoint,2 , usedSpaces, output);
+                solution = instigator.cornerGenerator(endXPoint, startYPoint, 2, usedSpaces, output);
             } else if (endXPoint == startXPoint) {
                 if (startYPoint > endYPoint) {
                     solution = instigator.roomGenerator(endXPoint - 1, endXPoint + 1,
