@@ -1,5 +1,7 @@
 package byow.Core;
 
+import byow.TileEngine.Infrastructure;
+import byow.TileEngine.RandomWorldGenerator;
 import byow.TileEngine.TERenderer;
 import byow.TileEngine.TETile;
 
@@ -45,8 +47,16 @@ public class Engine {
         //
         // See proj3.byow.InputDemo for a demo of how you can make a nice clean interface
         // that works for many different input types.
-
-        TETile[][] finalWorldFrame = null;
-        return finalWorldFrame;
+        int holder = 0;
+        if (input.charAt(0) == 'n' || input.charAt(0) == 'N') {
+            for (int i = 1; (input.charAt(i) != 's' && input.charAt(i) != 'S'); i++) {
+                holder = input.charAt(i) + (holder * 10);
+            }
+        }
+        Infrastructure input1 = new Infrastructure();
+        RandomWorldGenerator firstTry = new RandomWorldGenerator();
+        TETile[][] actualInput = firstTry.worldMaker(WIDTH, HEIGHT, holder);
+        actualInput = input1.fillNothing(actualInput, WIDTH, HEIGHT);
+        return actualInput;
     }
 }
