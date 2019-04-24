@@ -2,6 +2,8 @@ package byow.Core;
 
 import byow.TileEngine.TERenderer;
 import byow.TileEngine.TETile;
+import byow.TileEngine.Infrastructure;
+import byow.TileEngine.RandomWorldGenerator;
 
 public class Engine {
     TERenderer ter = new TERenderer();
@@ -45,7 +47,6 @@ public class Engine {
         //
         // See proj3.byow.InputDemo for a demo of how you can make a nice clean interface
         // that works for many different input types.
-        /*
         String holder = "";
         int seed;
         if (input.charAt(0) == 'n' || input.charAt(0) == 'N') {
@@ -65,9 +66,6 @@ public class Engine {
         TETile[][] actualInput = firstTry.worldMaker(WIDTH, HEIGHT, seed);
         actualInput = input1.fillNothing(actualInput, WIDTH, HEIGHT);
         return actualInput;
-        */
-        TETile[][] holder = new TETile[10][10];
-        return holder;
     }
 
     public static void main(String[] args) {
