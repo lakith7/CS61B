@@ -47,13 +47,14 @@ public class RandomWorldGenerator {
     }
 
     /* int[] = xlcoordinate, xrcoordinate, ybcoordinate, ytcoordinate. */
-    public RoomInfoHolder randConnectRoom (int[] firstRoom, int[] secondRoom,
+    public RoomInfoHolder randConnectRoom(int[] firstRoom, int[] secondRoom,
                                            TETile[][] output, int usedSpaces, int seed) {
         int[] point1 = randPointOnRoom(firstRoom, seed);
         int[] point2 = randPointOnRoom(secondRoom, seed + 1);
         Infrastructure holder = new Infrastructure();
         RoomInfoHolder newHolder;
-        newHolder = holder.createHallway(point1[0], point1[1], point2[0], point2[1], output, usedSpaces);
+        newHolder = holder.createHallway(point1[0], point1[1],
+                point2[0], point2[1], output, usedSpaces);
         if ((point1[0] != 0) && (output[point1[0] + 1][point1[1]] == Tileset.FLOOR)
                 && (output[point1[0] - 1][point1[1]] == Tileset.FLOOR)) {
             output[point1[0]][point1[1]] = Tileset.FLOOR;
@@ -74,7 +75,7 @@ public class RandomWorldGenerator {
     }
 
     /* Point array has xpoint first, then ypoint */
-    public int[] randPointOnRoom (int[] roomCoordinates, int seed) {
+    public int[] randPointOnRoom(int[] roomCoordinates, int seed) {
         int xl = roomCoordinates[0];
         int xr = roomCoordinates[1];
         int yb = roomCoordinates[2];
@@ -109,10 +110,12 @@ public class RandomWorldGenerator {
             }
         }
         Infrastructure holder = new Infrastructure();
-        RoomInfoHolder answer  = holder.roomGenerator(xlcoordinate, xrcoordinate, ytcoordinate, ybcoordinate, input, usedSpaces);
+        RoomInfoHolder answer  = holder.roomGenerator(xlcoordinate, xrcoordinate,
+                ytcoordinate, ybcoordinate, input, usedSpaces);
         return answer;
     }
 
+    /*
     public static void main(String args[]) {
         TERenderer example = new TERenderer();
         Infrastructure input = new Infrastructure();
@@ -123,5 +126,6 @@ public class RandomWorldGenerator {
         actualInput = input.fillNothing(actualInput, 50, 50);
         example.renderFrame(actualInput);
     }
+    */
 
 }

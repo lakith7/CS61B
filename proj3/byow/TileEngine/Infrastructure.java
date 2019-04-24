@@ -122,21 +122,21 @@ public class Infrastructure {
                         startYPoint, output, usedSpaces);
                 solution = instigator.roomGenerator(endXPoint, startXPoint, endYPoint + 1,
                         endYPoint - 1, output, usedSpaces);
-                solution = instigator.cornerGenerator(startXPoint, endYPoint,1 , usedSpaces, output);
+                solution = instigator.cornerGenerator(startXPoint, endYPoint, 1, usedSpaces, output);
             /* Situation 4 */
             } else if (endXPoint > startXPoint) {
                 solution = instigator.roomGenerator(startXPoint - 1, startXPoint + 1, endYPoint,
                         startYPoint, output, usedSpaces);
                 solution = instigator.roomGenerator(startXPoint, endXPoint, endYPoint + 1,
                         endYPoint - 1, output, usedSpaces);
-                solution = instigator.cornerGenerator(startXPoint, endYPoint,2 , usedSpaces, output);
+                solution = instigator.cornerGenerator(startXPoint, endYPoint, 2 ,usedSpaces, output);
             }
         } else if (endYPoint == startYPoint) {
             if (startXPoint > endXPoint) {
-                solution = instigator.roomGenerator(endXPoint, startXPoint, startYPoint + 1 ,
+                solution = instigator.roomGenerator(endXPoint, startXPoint, startYPoint + 1,
                         startYPoint - 1, output, usedSpaces);
             } else if (startXPoint < endXPoint) {
-                solution = instigator.roomGenerator(startXPoint, endXPoint, endYPoint + 1 ,
+                solution = instigator.roomGenerator(startXPoint, endXPoint, endYPoint + 1,
                         endYPoint - 1, output, usedSpaces);
             }
         }
@@ -174,6 +174,7 @@ public class Infrastructure {
         return input;
     }
 
+    /*
     public static void main(String args[]) {
         TERenderer example = new TERenderer();
         Infrastructure input = new Infrastructure();
@@ -183,5 +184,5 @@ public class Infrastructure {
         TETile[][] answer;
         answer = input.fillNothing(actualInput.getGrid(), 20, 20);
         example.renderFrame(answer);
-    }
+    } */
 }
