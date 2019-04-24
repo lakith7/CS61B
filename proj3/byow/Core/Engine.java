@@ -4,6 +4,7 @@ import byow.TileEngine.Infrastructure;
 import byow.TileEngine.RandomWorldGenerator;
 import byow.TileEngine.TERenderer;
 import byow.TileEngine.TETile;
+import java.math.BigInteger;
 
 public class Engine {
     TERenderer ter = new TERenderer();
@@ -50,7 +51,7 @@ public class Engine {
         String holder = "";
         int seed;
         if (input.charAt(0) == 'n' || input.charAt(0) == 'N') {
-            for (int i = 1; i < input.length(); i++) {
+            for (int i = 1; i < 10; i++) {
                 if (input.charAt(i) == 's') {
                     break;
                 }
@@ -69,10 +70,10 @@ public class Engine {
     }
 
     public static void main(String[] args) {
-        String input = "n1009835137506199904s";
+        String input = "n5197880843569031643s";
         String holder = "";
         if (input.charAt(0) == 'n' || input.charAt(0) == 'N') {
-            for (int i = 1; i < input.length(); i++) {
+            for (int i = 1; i < 10; i++) {
                 if (input.charAt(i) == 's') {
                     break;
                 }
@@ -82,5 +83,7 @@ public class Engine {
                 holder += input.charAt(i);
             }
         }
+        int seed = Integer.parseInt(holder);
+        System.out.println(seed);
     }
 }
