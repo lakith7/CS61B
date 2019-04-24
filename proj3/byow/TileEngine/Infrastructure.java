@@ -105,7 +105,8 @@ public class Infrastructure {
                         endYPoint, output, usedSpaces);
                 solution = instigator.roomGenerator(endXPoint, startXPoint, startYPoint + 1,
                         startYPoint - 1, output, usedSpaces);
-                solution = instigator.cornerGenerator(endXPoint, startYPoint, 2, usedSpaces, output);
+                solution = instigator.cornerGenerator(endXPoint, startYPoint,
+                        2, usedSpaces, output);
             } else if (endXPoint == startXPoint) {
                 if (startYPoint > endYPoint) {
                     solution = instigator.roomGenerator(endXPoint - 1, endXPoint + 1,
@@ -122,14 +123,16 @@ public class Infrastructure {
                         startYPoint, output, usedSpaces);
                 solution = instigator.roomGenerator(endXPoint, startXPoint, endYPoint + 1,
                         endYPoint - 1, output, usedSpaces);
-                solution = instigator.cornerGenerator(startXPoint, endYPoint, 1, usedSpaces, output);
+                solution = instigator.cornerGenerator(startXPoint,
+                        endYPoint, 1, usedSpaces, output);
             /* Situation 4 */
             } else if (endXPoint > startXPoint) {
                 solution = instigator.roomGenerator(startXPoint - 1, startXPoint + 1, endYPoint,
                         startYPoint, output, usedSpaces);
                 solution = instigator.roomGenerator(startXPoint, endXPoint, endYPoint + 1,
                         endYPoint - 1, output, usedSpaces);
-                solution = instigator.cornerGenerator(startXPoint, endYPoint, 2 ,usedSpaces, output);
+                solution = instigator.cornerGenerator(startXPoint,
+                        endYPoint, 2, usedSpaces, output);
             }
         } else if (endYPoint == startYPoint) {
             if (startXPoint > endXPoint) {
