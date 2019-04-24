@@ -53,16 +53,16 @@ public class RandomWorldGenerator {
         Infrastructure holder = new Infrastructure();
         RoomInfoHolder newHolder;
         newHolder = holder.createHallway(Point1[0], Point1[1], Point2[0], Point2[1], output, usedSpaces);
-        if ((output[Point1[0] + 1][Point1[1]] == Tileset.FLOOR) && (output[Point1[0] - 1][Point1[1]] == Tileset.FLOOR)) {
+        if ((Point1[0] != 0) && (output[Point1[0] + 1][Point1[1]] == Tileset.FLOOR) && (output[Point1[0] - 1][Point1[1]] == Tileset.FLOOR)) {
             output[Point1[0]][Point1[1]] = Tileset.FLOOR;
         }
-        if ((output[Point2[0] + 1][Point2[1]] == Tileset.FLOOR) && (output[Point2[0] - 1][Point2[1]] == Tileset.FLOOR)) {
+        if ((Point2[0] != 0) && (output[Point2[0] + 1][Point2[1]] == Tileset.FLOOR) && (output[Point2[0] - 1][Point2[1]] == Tileset.FLOOR)) {
             output[Point2[0]][Point2[1]] = Tileset.FLOOR;
         }
-        if ((output[Point1[0]][Point1[1] + 1] == Tileset.FLOOR) && (output[Point1[0]][Point1[1] - 1] == Tileset.FLOOR)) {
+        if ((Point1[1] != 0) && (output[Point1[0]][Point1[1] + 1] == Tileset.FLOOR) && (output[Point1[0]][Point1[1] - 1] == Tileset.FLOOR)) {
             output[Point1[0]][Point1[1]] = Tileset.FLOOR;
         }
-        if ((output[Point2[0]][Point2[1] + 1] == Tileset.FLOOR) && (output[Point2[0]][Point2[1] - 1] == Tileset.FLOOR)) {
+        if ((Point2[1] != 0) && (output[Point2[0]][Point2[1] + 1] == Tileset.FLOOR) && (output[Point2[0]][Point2[1] - 1] == Tileset.FLOOR)) {
             output[Point2[0]][Point2[1]] = Tileset.FLOOR;
         }
         return newHolder;
@@ -76,17 +76,14 @@ public class RandomWorldGenerator {
         int yt = roomCoordinates[3];
         Random rand = new Random(seed);
         int[] point = new int[2];
-        int side = pseudoRand.uniform(rand, 4);
-        if (side == 0) {
-            point[0] = xl;
-            point[1] = pseudoRand.uniform(rand, yb, yt);
-        } else if (side == 1) {
+        int side = pseudoRand.uniform(rand, 3);
+        if (side == 1) {
             point[0] = pseudoRand.uniform(rand, xl, xr);
             point[1] = yt;
         } else if (side == 2) {
             point[0] = xr;
             point[1] = pseudoRand.uniform(rand, yb, yt);
-        } else if (side == 3) {
+        } else if (side == 0) {
             point[0] = pseudoRand.uniform(rand, xl, xr);
             point[1] = yb;
         }
@@ -114,7 +111,7 @@ public class RandomWorldGenerator {
         RandomWorldGenerator firstTry = new RandomWorldGenerator();
         example.initialize(50, 50);
         TETile[][] grid = new TETile[50][50];
-        TETile[][] actualInput = firstTry.worldMaker(50, 50, 564);
+        TETile[][] actualInput = firstTry.worldMaker(50, 50, 455857754);
         actualInput = input.fillNothing(actualInput, 50, 50);
         example.renderFrame(actualInput);
     }
