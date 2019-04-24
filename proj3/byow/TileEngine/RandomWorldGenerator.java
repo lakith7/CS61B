@@ -20,9 +20,9 @@ public class RandomWorldGenerator {
             if (usedSpaces > (0.3 * height * width)) {
                 break;
             }
-            int xlcoordinate = pseudoRand.uniform(rand, width - (width/4));
+            int xlcoordinate = pseudoRand.uniform(rand, 2,  width - 5);
             int xrcoordinate = pseudoRand.uniform(rand, xlcoordinate + 2, width - 2);
-            int ybcoordinate = pseudoRand.uniform(rand, height - (height/4));
+            int ybcoordinate = pseudoRand.uniform(rand, 2, height - 5);
             int ytcoordinate = pseudoRand.uniform(rand, ybcoordinate + 2, height - 2);
             newRoom[0] = xlcoordinate;
             newRoom[1] = xrcoordinate;
@@ -76,14 +76,17 @@ public class RandomWorldGenerator {
         int yt = roomCoordinates[3];
         Random rand = new Random(seed);
         int[] point = new int[2];
-        int side = pseudoRand.uniform(rand, 3);
-        if (side == 1) {
+        int side = pseudoRand.uniform(rand, 4);
+        if (side == 0) {
+            point[0] = xl;
+            point[1] = pseudoRand.uniform(rand, yb, yt);
+        } else if (side == 1) {
             point[0] = pseudoRand.uniform(rand, xl, xr);
             point[1] = yt;
         } else if (side == 2) {
             point[0] = xr;
             point[1] = pseudoRand.uniform(rand, yb, yt);
-        } else if (side == 0) {
+        } else if (side == 3) {
             point[0] = pseudoRand.uniform(rand, xl, xr);
             point[1] = yb;
         }

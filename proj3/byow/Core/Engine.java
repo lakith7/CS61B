@@ -70,7 +70,7 @@ public class Engine {
     }
 
     public static void main(String[] args) {
-        String input = "n455857754086099036s";
+        String input = "n6092189277992103318s";
         String holder = "";
         if (input.charAt(0) == 'n' || input.charAt(0) == 'N') {
             for (int i = 1; i < 10; i++) {
